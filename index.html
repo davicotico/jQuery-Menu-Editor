@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Admin</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="bs-iconpicker/css/bootstrap-iconpicker.min.css">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        <style type="text/css">
+            ol.example li.placeholder:before {
+                position: absolute;
+            }
+
+            .list-group-item > div {margin-bottom: 5px;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"><h3>Demo</h3></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix"><h5 class="pull-left">Menu</h5>
+                            <div class="pull-right">
+                            <button id="btnOut" type="button" class="btn btn-success">
+                                <i class="glyphicon glyphicon-ok"></i> Save</button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <ul id="myList" class="sortableLists list-group">
+                                <li class="list-group-item" data-text="Home" data-icon="fa-home"
+                                    data-url="http://home.com">
+                                    <div><i class="fa fa-home"></i> <span class="txt">Home</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion2" data-icon="fa-bar-chart-o">
+                                    <div><i class="fa fa-bar-chart-o"></i> <span class="txt">Opcion2</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion3" data-icon="fa-cloud-upload">
+                                    <div><i class="fa fa-cloud-upload"></i> <span class="txt">Opcion3</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion4" data-icon="fa-crop">
+                                    <div><i class="fa fa-crop"></i> <span class="txt">Opcion4</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion5" data-icon="fa-flask">
+                                    <div><i class="fa fa-flask"></i> <span class="txt">Opcion5</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion6" data-icon="fa-map-marker">
+                                    <div><i class="fa fa-map-marker"></i> <span class="txt">Opcion6</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-text="Opcion7" data-icon="fa-search">
+                                    <div><i class="fa fa-search"></i> <span class="txt">Opcion7</span>
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li class="list-group-item" data-text="Opcion7-1" data-icon="fa-plug">
+                                            <div><i class="fa fa-plug"></i> <span class="txt">Opcion7-1</span>
+                                                <div class="btn-group pull-right">
+                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item" data-text="Opcion7-2" data-icon="fa-filter">
+                                            <div><i class="fa fa-filter"></i> <span class="txt">Opcion7-2</span>
+                                                <div class="btn-group pull-right">
+                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">Remove</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Edit item</div>
+                        <div class="panel-body">
+                            <form id="frmEdit" class="form-horizontal">
+                                <input type="hidden" name="mnu_icon" id="mnu_icon">
+                                <div class="form-group">
+                                    <label for="mnu_text" class="col-sm-2 control-label">Text</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="mnu_text" name="mnu_text" placeholder="Text">
+                                            <div class="input-group-btn">
+                                                <button id="mnu_iconpicker" class="btn btn-default" data-iconset="fontawesome" data-icon="" type="button"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mnu_href" class="col-sm-2 control-label">URL</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="mnu_href" name="mnu_href" placeholder="URL">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mnu_target" class="col-sm-2 control-label">Target</label>
+                                    <div class="col-sm-10">
+                                        <select id="mnu_target" name="mnu_target" class="form-control">
+                                            <option value="_self">Self</option>
+                                            <option value="_blank">Blank</option>
+                                            <option value="_top">Top</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mnu_text" class="col-sm-2 control-label">Tooltip</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="mnu_tooltip" name="mnu_tooltip" placeholder="Text">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-footer">
+                            <button type="button" id="btnUpdate" class="btn btn-primary" disabled><i class="fa fa-refresh"></i> Update</button>
+                            <button type="button" id="btnAdd" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                            <button type="button" id="btnClear" class="btn btn-default"><i class="fa fa-eraser"></i> Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-6"><textarea id="out" cols="50" rows="10"></textarea></div>
+            </div>
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src='http://localhost/labtest/firebird/jquery-sortable-lists.js'></script>
+        <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
+        <script src='bs-iconpicker/js/bootstrap-iconpicker.min.js'></script>
+        <script>
+            jQuery(document).ready(function () {
+                var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
+                var options = {
+                    hintCss: {'border': '1px dashed #13981D'},
+                    placeholderCss: {'background-color': 'gray'},
+                    ignoreClass: 'btn',
+                    opener: {
+                        active: true,
+                        as: 'html',
+                        close: '<i class="fa fa-minus"></i>',
+                        open: '<i class="fa fa-plus"></i>',
+                        openerCss: {'margin-right': '10px'},
+                        openerClass: 'btn btn-success btn-xs'
+                    }
+                };
+                menuBuilder('myList', {listOptions: options, iconPicker: iconPickerOpt});
+            });
+        </script>
+    </body>
+</html>
