@@ -1,16 +1,9 @@
 /**
+ * jQuery Menu Editor
  * 
- */
-
+ * */
 (function ($)
 {
-    /**
-     * @desc jQuery plugin to sort html list also the tree structures
-     * @author Vladimír Čamaj
-     * @license MIT
-     * @param options
-     * @returns this to unsure chaining
-     */
     $.fn.sortableLists = function (options)
     {
         // Local variables. This scope is available for all the functions in this closure.
@@ -484,7 +477,7 @@
             cEl.el.css({
                 'top': e.pageY - cEl.xyOffsetDiff.Y - cEl.mT,
                 'left': e.pageX - cEl.xyOffsetDiff.X - cEl.mL
-            })
+            }); //Fix david (;)
 
         }
 
@@ -872,7 +865,6 @@
         }
 
         /////// Enf of open/close handlers //////////////////////////////////////////////
-
         /**
          * @desc Places the currEl to the target place
          * @param cEl
@@ -972,7 +964,13 @@ function menuBuilder(idSelector, settings){
         e.preventDefault();
         var list = $(this).closest('ul');
         $(this).closest('li').remove();
-        if ((!list.children().length)&&(list.attr('id').toString()!==idSelector)) {
+        
+        var isMainContainer = false;
+        if (typeof list.attr('id')!=='undefined'){
+            isMainContainer = (list.attr('id').toString()===idSelector);
+        }
+        
+        if ((!list.children().length)&&(!isMainContainer)) {
             list.prev('div').children('.sortableListsOpener').first().remove();
             list.remove();
         }
@@ -1007,7 +1005,7 @@ function menuBuilder(idSelector, settings){
         itemEdit.data('text', text);
         itemEdit.data('href', $("#mnu_href").val());
         itemEdit.data('target', $("#mnu_target").val());
-        itemEdit.data('tooltip', $("#mnu_tooltip").val());
+        itemEdit.data('title', $("#mnu_title").val());
         itemEdit.data('icon', icon);
         reset();
     }
