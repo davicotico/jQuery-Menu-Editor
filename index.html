@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mnu_text" class="col-sm-2 control-label">Tooltip</label>
+                                    <label for="mnu_title" class="col-sm-2 control-label">Tooltip</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="mnu_title" name="mnu_title" placeholder="Text">
                                     </div>
@@ -163,7 +163,7 @@
                             </ul>
                         </div>
                     </div>
-                    Output: <textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                    <label for="out">Output:</label><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
                 </div>
             </div>
             <div>
@@ -191,7 +191,7 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                menuBuilder('myList', {listOptions: options, iconPicker: iconPickerOpt});
+                menuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'E', labelRemove: 'X'});
             });
         </script>
     </body>

@@ -932,9 +932,11 @@
  * @param {string} idSelector Attr ID
  * @param {object} settings All Settings
  * */
-function menuBuilder(idSelector, settings){    
+function menuEditor(idSelector, settings){    
     var iconPickerOpt = settings.iconPicker;
     var options = settings.listOptions;
+    var labelEdit = settings.labelEdit || 'E';
+    var labelRemove = settings.labelRemove || 'X';
     var iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
     iconPicker.on('change', function (e) {
         $("#mnu_icon").val(e.icon);
@@ -1013,8 +1015,8 @@ function menuBuilder(idSelector, settings){
     function addItem() {
         var arrForm = $("#frmEdit").serializeArray();
         var text = $("#mnu_text").val();
-        var btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: 'E'});
-        var btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: 'X'});
+        var btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
+        var btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
         var grpBtns = $("<div>").addClass('btn-group pull-right').append(btnEdit).append(btnRemv);
         var textItem = $('<span>').addClass('txt').text(text);
         var iconItem = $('<i>').addClass('fa ' + $("#mnu_icon").val());
