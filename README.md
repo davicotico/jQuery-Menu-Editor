@@ -11,4 +11,6 @@
 
 ## See the [DEMO](http://codeignitertutoriales.com/demos/jqmenueditor/)
 ## Documentation
-Coming soon.
+**En español: http://codeignitertutoriales.com/jquery-menu-editor-multinivel/**
+
+English coming soon.
