@@ -1,5 +1,6 @@
 # jQuery Menu Editor
 ## Features
+* Add, Update & Remove items menu
 * Multilevel Drag & Drop Items
 * Form item editor
 * Include IconPicker Plugin (https://victor-valencia.github.com/bootstrap-iconpicker)
