@@ -932,7 +932,11 @@
  * @param {string} idSelector Attr ID
  * @param {object} settings All Settings
  * */
-function menuEditor(idSelector, settings){    
+function menuEditor(idSelector, settings){
+    var $main = $("#"+idSelector);
+    var data = jQuery.parseJSON(settings.data);
+    var menu = createMenu(data, 0);
+    $main.append(menu);
     var iconPickerOpt = settings.iconPicker;
     var options = settings.listOptions;
     var labelEdit = settings.labelEdit || 'E';
@@ -944,7 +948,7 @@ function menuEditor(idSelector, settings){
 
     var itemEdit = 0;
 
-    var inst = $('#'+idSelector).sortableLists(options);
+    var inst = $main.sortableLists(options);
     
     $('#btnOut').on('click', function () {
         var obj = inst.sortableListsToJson();
@@ -1040,6 +1044,42 @@ function menuEditor(idSelector, settings){
         $("#btnUpdate").attr('disabled', true);
         itemEdit = 0;
     }
+    
+    /**
+    * @param {array} arrayItem Object Array
+    * @param {int} depth Depth sub-menu
+    * @return {object} jQuery Object
+    * */
+    function createMenu(arrayItem, depth){
+        var level = (typeof(depth)==='undefined') ? 0 : depth;
+        var $elem;
+        if (level === 0){
+            $elem = $main;
+        } else{
+            $elem = $('<ul>');
+        }
+        $.each(arrayItem, function(k, v){
+            var isParent = (typeof(v.children) !== "undefined") && ($.isArray(v.children));
+            var $li = $('<li>');
+            $li.attr('id', v.text);
+            $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.url);
+            var $div = $('<div>');
+            var $i = $('<i>').addClass('fa '+v.icon);
+            var $span = $('<span>').addClass('text').append(v.text);
+            var $divbtn = $('<div>').addClass('btn-group pull-right');
+            var $btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
+            var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
+            $divbtn.append($btnEdit).append($btnRemv);
+            $div.append($i).append($span).append($divbtn);
+            $li.append($div);
+            if (isParent){
+                $li.append(createMenu(v.children, level+1));
+            }
+            $elem.append($li);
+        });
+        return $elem;
+    }
+    
     function TButton(attr){
         return $("<a>").addClass(attr.classCss).attr("href", "#").text(attr.text);
     }

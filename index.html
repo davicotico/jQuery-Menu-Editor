@@ -83,9 +83,9 @@
                                 <i class="glyphicon glyphicon-ok"></i> Save</button>
                             </div>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" id="cont">
                             <ul id="myList" class="sortableLists list-group">
-                                <li class="list-group-item" data-text="Home" data-icon="fa-home"
+                                <!--<li class="list-group-item" data-text="Home" data-icon="fa-home"
                                     data-url="http://home.com">
                                     <div><i class="fa fa-home"></i> <span class="txt">Home</span>
                                         <div class="btn-group pull-right">
@@ -159,7 +159,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                         </div>
                     </div>
@@ -177,6 +177,7 @@
         <script src='bs-iconpicker/js/bootstrap-iconpicker.min.js'></script>
         <script>
             jQuery(document).ready(function () {
+                var strJson = '[{"url":"http://home.com","icon":"fa-home","text":"Home"},{"icon":"fa-bar-chart-o","text":"Opcion2"},{"icon":"fa-cloud-upload","text":"Opcion3"},{"icon":"fa-crop","text":"Opcion4"},{"icon":"fa-flask","text":"Opcion5"},{"icon":"fa-map-marker","text":"Opcion6"},{"icon":"fa-search","text":"Opcion7","children":[{"icon":"fa-plug","text":"Opcion7-1"},{"icon":"fa-filter","text":"Opcion7-2"}]}]';
                 var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
                 var options = {
                     hintCss: {'border': '1px dashed #13981D'},
@@ -191,7 +192,7 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                menuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'X'});
+                menuEditor('myList', {data: strJson, listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'X'});
             });
         </script>
     </body>
