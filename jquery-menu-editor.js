@@ -934,22 +934,25 @@
  * */
 function menuEditor(idSelector, settings){
     var $main = $("#"+idSelector);
-    var data = jQuery.parseJSON(settings.data);
-    var menu = createMenu(data, 0);
-    $main.append(menu);
-    var iconPickerOpt = settings.iconPicker;
-    var options = settings.listOptions;
     var labelEdit = settings.labelEdit || 'E';
     var labelRemove = settings.labelRemove || 'X';
+    
+    if ('data' in settings){
+        var data = jsonToObject(settings.data); //jQuery.parseJSON(settings.data);
+        if (data!==null){
+            var menu = createMenu(data, 0);
+            $main.append(menu);
+        }
+    }
+    var iconPickerOpt = settings.iconPicker;
+    var options = settings.listOptions;
+    
     var iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
     iconPicker.on('change', function (e) {
         $("#mnu_icon").val(e.icon);
     });
-
     var itemEdit = 0;
-
     var inst = $main.sortableLists(options);
-    
     $('#btnOut').on('click', function () {
         var obj = inst.sortableListsToJson();
         var str = JSON.stringify(obj);
@@ -1044,7 +1047,6 @@ function menuEditor(idSelector, settings){
         $("#btnUpdate").attr('disabled', true);
         itemEdit = 0;
     }
-    
     /**
     * @param {array} arrayItem Object Array
     * @param {int} depth Depth sub-menu
@@ -1062,7 +1064,7 @@ function menuEditor(idSelector, settings){
             var isParent = (typeof(v.children) !== "undefined") && ($.isArray(v.children));
             var $li = $('<li>');
             $li.attr('id', v.text);
-            $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.url);
+            $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.href);
             var $div = $('<div>');
             var $i = $('<i>').addClass('fa '+v.icon);
             var $span = $('<span>').addClass('text').append(v.text);
@@ -1079,7 +1081,15 @@ function menuEditor(idSelector, settings){
         });
         return $elem;
     }
-    
+    function jsonToObject(str){
+        try {
+            var obj = $.parseJSON(str);
+        } catch (err) {
+            console.log('The string is not a json valid.');
+            return null;
+        }
+        return obj;
+    }
     function TButton(attr){
         return $("<a>").addClass(attr.classCss).attr("href", "#").text(attr.text);
     }

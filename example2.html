@@ -85,81 +85,6 @@
                         </div>
                         <div class="panel-body" id="cont">
                             <ul id="myList" class="sortableLists list-group">
-                                <li class="list-group-item" data-text="Home" data-icon="fa-home"
-                                    data-href="http://home.com">
-                                    <div><i class="fa fa-home"></i> <span class="txt">Home</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion2" data-icon="fa-bar-chart-o">
-                                    <div><i class="fa fa-bar-chart-o"></i> <span class="txt">Opcion2</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion3" data-icon="fa-cloud-upload">
-                                    <div><i class="fa fa-cloud-upload"></i> <span class="txt">Opcion3</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion4" data-icon="fa-crop">
-                                    <div><i class="fa fa-crop"></i> <span class="txt">Opcion4</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion5" data-icon="fa-flask">
-                                    <div><i class="fa fa-flask"></i> <span class="txt">Opcion5</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion6" data-icon="fa-map-marker">
-                                    <div><i class="fa fa-map-marker"></i> <span class="txt">Opcion6</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion7" data-icon="fa-search">
-                                    <div><i class="fa fa-search"></i> <span class="txt">Opcion7</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li class="list-group-item" data-text="Opcion7-1" data-icon="fa-plug">
-                                            <div><i class="fa fa-plug"></i> <span class="txt">Opcion7-1</span>
-                                                <div class="btn-group pull-right">
-                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item" data-text="Opcion7-2" data-icon="fa-filter">
-                                            <div><i class="fa fa-filter"></i> <span class="txt">Opcion7-2</span>
-                                                <div class="btn-group pull-right">
-                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -177,6 +102,7 @@
         <script src='bs-iconpicker/js/bootstrap-iconpicker.min.js'></script>
         <script>
             jQuery(document).ready(function () {
+                var strJson = '[{"href":"http://home.com","icon":"fa-home","text":"Home"},{"icon":"fa-bar-chart-o","text":"Opcion2"},{"icon":"fa-cloud-upload","text":"Opcion3"},{"icon":"fa-crop","text":"Opcion4"},{"icon":"fa-flask","text":"Opcion5"},{"icon":"fa-map-marker","text":"Opcion6"},{"icon":"fa-search","text":"Opcion7","children":[{"icon":"fa-plug","text":"Opcion7-1"},{"icon":"fa-filter","text":"Opcion7-2"}]}]';
                 var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
                 var options = {
                     hintCss: {'border': '1px dashed #13981D'},
@@ -191,7 +117,7 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                menuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'X'});
+                menuEditor('myList', {data: strJson, listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'X'});
             });
         </script>
     </body>
