@@ -938,7 +938,7 @@ function menuEditor(idSelector, settings){
     var labelRemove = settings.labelRemove || 'X';
     
     if ('data' in settings){
-        var data = jsonToObject(settings.data); //jQuery.parseJSON(settings.data);
+        var data = jsonToObject(settings.data);
         if (data!==null){
             var menu = createMenu(data, 0);
             $main.append(menu);
@@ -1067,12 +1067,12 @@ function menuEditor(idSelector, settings){
             $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.href);
             var $div = $('<div>');
             var $i = $('<i>').addClass('fa '+v.icon);
-            var $span = $('<span>').addClass('text').append(v.text);
+            var $span = $('<span>').addClass('txt').append(v.text);
             var $divbtn = $('<div>').addClass('btn-group pull-right');
             var $btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
             var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
             $divbtn.append($btnEdit).append($btnRemv);
-            $div.append($i).append($span).append($divbtn);
+            $div.append($i).append("&nbsp;").append($span).append($divbtn);
             $li.append($div);
             if (isParent){
                 $li.append(createMenu(v.children, level+1));
