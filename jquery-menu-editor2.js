@@ -932,7 +932,7 @@
  * @param {string} idSelector Attr ID
  * @param {object} settings All Settings
  * */
-function menuEditor(idSelector, settings) {
+function MenuEditor(idSelector, settings) {
     var $main = $("#" + idSelector);
     var labelEdit = settings.labelEdit || 'E';
     var labelRemove = settings.labelRemove || 'X';
@@ -952,13 +952,6 @@ function menuEditor(idSelector, settings) {
         $("#mnu_icon").val(e.icon);
     });
     var itemEdit = 0;
-    var inst = $main.sortableLists(options);
-    
-    $('#btnOut').on('click', function () {
-        var obj = inst.sortableListsToJson();
-        var str = JSON.stringify(obj);
-        $("#out").text(str);
-    });
 
     $("#btnUpdate").click(function (e) {
         e.preventDefault();
@@ -1048,12 +1041,26 @@ function menuEditor(idSelector, settings) {
         $("#btnUpdate").attr('disabled', true);
         itemEdit = 0;
     }
+    
+    this.setData = function(strJson) {
+        var arrayItem = jsonToObject(strJson);
+        if (arrayItem !== null) {
+            var menu = createMenu(arrayItem);
+            $main.empty();
+            $main.append(menu);
+            $main.sortableLists(settings.listOptions);
+        }
+    };
+    this.getString = function(){
+        var obj = $main.sortableListsToJson();
+        return JSON.stringify(obj);
+    };
     /**
      * @param {array} arrayItem Object Array
      * @param {int} depth Depth sub-menu
      * @return {object} jQuery Object
      * */
-    function createMenu(arrayItem, depth) {
+    function createMenu (arrayItem, depth) {
         var level = (typeof (depth) === 'undefined') ? 0 : depth;
         var $elem;
         if (level === 0) {
@@ -1084,7 +1091,7 @@ function menuEditor(idSelector, settings) {
     }
     function jsonToObject(str) {
         try {
-            var obj = $.parseJSON(str);
+            var obj = JSON.parse(str);
         } catch (err) {
             console.log('The string is not a json valid.');
             return null;
