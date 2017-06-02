@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin</title>
+        <title>jQuery Menu Editor - Demo 2</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -25,7 +25,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-md-12"><h3>Demo</h3></div>
+                <div class="col-md-12"><h2>Demo</h2></div>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -74,109 +74,49 @@
                             <button type="button" id="btnAdd" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
                         </div>
                     </div>
+                    <h2>Projects</h2>
+          <ul>
+              <li><a href="https://github.com/davicotico/PHP-Quick-Menu" target="_blank">PHP Quick Menu</a></li>
+              <li><a href="https://github.com/davicotico/Codeigniter-Form-Validation-Extension" target="_blank">Form Validator Extension for Codeigniter</a></li>
+              <li><a href="https://github.com/davicotico/Codeigniter-Imagify" target="_blank">Codeigniter Imagify (Image optimization)</a></li>
+              <li><a href="https://github.com/davicotico/jQuery-formHelper" target="_blank">jQuery formHelper</a></li>
+          </ul>
                 </div>
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix"><h5 class="pull-left">Menu</h5>
                             <div class="pull-right">
-                            <button id="btnOut" type="button" class="btn btn-success">
-                                <i class="glyphicon glyphicon-ok"></i> Save</button>
+                            <button id="btnReload" type="button" class="btn btn-default">
+                                <i class="glyphicon glyphicon-triangle-right"></i> Load Data</button>
+                            
                             </div>
                         </div>
                         <div class="panel-body" id="cont">
                             <ul id="myList" class="sortableLists list-group">
-                                <li class="list-group-item" data-text="Home" data-icon="fa-home"
-                                    data-href="http://home.com">
-                                    <div><i class="fa fa-home"></i> <span class="txt">Home</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion2" data-icon="fa-bar-chart-o">
-                                    <div><i class="fa fa-bar-chart-o"></i> <span class="txt">Opcion2</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion3" data-icon="fa-cloud-upload">
-                                    <div><i class="fa fa-cloud-upload"></i> <span class="txt">Opcion3</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion4" data-icon="fa-crop">
-                                    <div><i class="fa fa-crop"></i> <span class="txt">Opcion4</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion5" data-icon="fa-flask">
-                                    <div><i class="fa fa-flask"></i> <span class="txt">Opcion5</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion6" data-icon="fa-map-marker">
-                                    <div><i class="fa fa-map-marker"></i> <span class="txt">Opcion6</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" data-text="Opcion7" data-icon="fa-search">
-                                    <div><i class="fa fa-search"></i> <span class="txt">Opcion7</span>
-                                        <div class="btn-group pull-right">
-                                            <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li class="list-group-item" data-text="Opcion7-1" data-icon="fa-plug">
-                                            <div><i class="fa fa-plug"></i> <span class="txt">Opcion7-1</span>
-                                                <div class="btn-group pull-right">
-                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item" data-text="Opcion7-2" data-icon="fa-filter">
-                                            <div><i class="fa fa-filter"></i> <span class="txt">Opcion7-2</span>
-                                                <div class="btn-group pull-right">
-                                                    <a href="#" class="btn btn-default btn-xs btnEdit">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-xs btnRemove">X</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
                             </ul>
                         </div>
                     </div>
-                    <label for="out">Output:</label><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                    <div class="form-group">
+                    <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Output</button>
+                    </div>
+                    <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div class="col-md-6"></div>
-            </div>
+            <hr>
+        <footer>
+        <p>&copy; 2017 David Ticona Saravia</p>
+        </footer>
         </div>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src='jquery-menu-editor.js'></script>
+        <script src='jquery-menu-editor2.js'></script>
         <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
         <script src='bs-iconpicker/js/bootstrap-iconpicker.min.js'></script>
         <script>
             jQuery(document).ready(function () {
+                //var strJson = '[{"text":"Home","icon":"fa-home","href":"http://codeignitertutoriales.com"},{"text":"Youtube","icon":"fa-youtube-square","href":"https://www.youtube.com/user/davicotico"},{"text":"Github","icon":"fa-github","href":"https://github.com/davicotico","target":"_self","title":""},{"text":"Opcion4","icon":"fa-crop"},{"text":"Opcion5","icon":"fa-flask"},{"text":"Opcion6","icon":"fa-map-marker"},{"text":"Opcion7","icon":"fa-search","children":[{"text":"Opcion7-1","icon":"fa-plug"},{"text":"Opcion7-2","icon":"fa-filter"}]}]';
+                var strjson1 = '[{"href":"http://home.com","icon":"fa-home","text":"Home"},{"icon":"fa-bar-chart-o","text":"Opcion2"},{"icon":"fa-cloud-upload","text":"Opcion3"},{"icon":"fa-crop","text":"Opcion4"},{"icon":"fa-flask","text":"Opcion5"},{"icon":"fa-search","text":"Opcion7","children":[{"icon":"fa-plug","text":"Opcion7-1","children":[{"icon":"fa-filter","text":"Opcion7-2","children":[{"icon":"fa-map-marker","text":"Opcion6"}]}]}]}]';
                 var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
                 var options = {
                     hintCss: {'border': '1px dashed #13981D'},
@@ -191,7 +131,14 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                menuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'X'});
+                var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'Remove'});
+                $('#btnReload').on('click', function () {
+                    editor.setData(strjson1);
+                });
+                $('#btnOut').on('click', function () {
+                    var str = editor.getString();
+                    $("#out").text(str);
+                });
             });
         </script>
     </body>

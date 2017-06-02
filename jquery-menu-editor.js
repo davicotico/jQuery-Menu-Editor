@@ -932,12 +932,15 @@
  * @param {string} idSelector Attr ID
  * @param {object} settings All Settings
  * */
-function menuEditor(idSelector, settings) {
+function MenuEditor(idSelector, settings) {
+    
     var $main = $("#" + idSelector);
     var labelEdit = settings.labelEdit || 'E';
     var labelRemove = settings.labelRemove || 'X';
-
+    var sortableReady = false;
+    
     if ('data' in settings) {
+        console.log('no');
         var data = jsonToObject(settings.data);
         if (data !== null) {
             var menu = createMenu(data, 0);
@@ -952,13 +955,6 @@ function menuEditor(idSelector, settings) {
         $("#mnu_icon").val(e.icon);
     });
     var itemEdit = 0;
-    var inst = $main.sortableLists(options);
-    
-    $('#btnOut').on('click', function () {
-        var obj = inst.sortableListsToJson();
-        var str = JSON.stringify(obj);
-        $("#out").text(str);
-    });
 
     $("#btnUpdate").click(function (e) {
         e.preventDefault();
@@ -1048,14 +1044,15 @@ function menuEditor(idSelector, settings) {
         $("#btnUpdate").attr('disabled', true);
         itemEdit = 0;
     }
+
     /**
      * @param {array} arrayItem Object Array
      * @param {int} depth Depth sub-menu
      * @return {object} jQuery Object
      * */
-    function createMenu(arrayItem, depth) {
+    function createMenu (arrayItem, depth) {
         var level = (typeof (depth) === 'undefined') ? 0 : depth;
-        var $elem;
+        var $elem; //aqui el problema
         if (level === 0) {
             $elem = $main;
         } else {
@@ -1084,7 +1081,7 @@ function menuEditor(idSelector, settings) {
     }
     function jsonToObject(str) {
         try {
-            var obj = $.parseJSON(str);
+            var obj = JSON.parse(str);
         } catch (err) {
             console.log('The string is not a json valid.');
             return null;
@@ -1093,5 +1090,75 @@ function menuEditor(idSelector, settings) {
     }
     function TButton(attr) {
         return $("<a>").addClass(attr.classCss).attr("href", "#").text(attr.text);
+    }
+    
+    this.setData = function(strJson) {
+        var arrayItem = jsonToObject(strJson);
+        if (arrayItem !== null) {
+            $main.empty();
+            var menu = createMenu(arrayItem);
+            if (!sortableReady){
+                menu.sortableLists(settings.listOptions);
+                sortableReady = true;
+            } else{
+                setOpeners();
+            }
+            //$main.append(menu);
+        }
+    };
+    this.getString = function(){
+        var obj = $main.sortableListsToJson();
+        return JSON.stringify(obj);
+    };
+    function setOpeners(){
+        $main.find('li').each(function (){
+            var li = $(this);
+            if (li.children('ul').length){
+                var opener = $('<span>')
+                .addClass('sortableListsOpener ' + options.opener.openerClass)
+                .css(options.opener.openerCss)
+                .on('mousedown', function (e)
+                {
+                    var li = $(this).closest('li');
+                    if (li.hasClass('sortableListsClosed')){
+                        open(li);
+                    } else{
+                        close(li);
+                    }
+                    return false; // Prevent default
+                });
+                opener.prependTo(li.children('div').first());
+                if (!li.hasClass('sortableListsOpen')){
+                    close(li);
+                } else{
+                    open(li);
+                }
+            }
+        });
+    }
+    function open(li)
+    {
+        li.removeClass('sortableListsClosed').addClass('sortableListsOpen');
+        li.children('ul').css('display', 'block');
+        var opener = li.children('div').children('.sortableListsOpener').first();
+        if (options.opener.as === 'html'){
+            opener.html(options.opener.close);
+        } else if (options.opener.as === 'class'){
+            opener.addClass(options.opener.close).removeClass(options.opener.open);
+        } else{
+            opener.css('background-image', 'url(' + options.opener.close + ')');
+        }
+    }
+    function close(li){
+        li.removeClass('sortableListsOpen').addClass('sortableListsClosed');
+        li.children('ul').css('display', 'none');
+        var opener = li.children('div').children('.sortableListsOpener').first();
+        if (options.opener.as === 'html'){
+            opener.html(options.opener.open);
+        } else if (options.opener.as === 'class'){
+            opener.addClass(options.opener.open).removeClass(options.opener.close);
+        } else{
+            opener.css('background-image', 'url(' + options.opener.open + ')');
+        }
     }
 }

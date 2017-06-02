@@ -4,9 +4,10 @@
 * Multilevel Drag & Drop Items
 * Form item editor
 * Include IconPicker Plugin (https://victor-valencia.github.com/bootstrap-iconpicker)
+* Load the data from a JSON string 
 * The output is a Json string
 
-This is based in jQuery-Sortable-lists http://camohub.github.io/jquery-sortable-lists/index.html . Was changed  some lines for better results.
+This project was inspirated in jQuery-Sortable-lists http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
 
 ### The Form item editor
 ![menu-multilevel](http://codeignitertutoriales.com/wp-content/uploads/2017/01/jquery-menu-editor-form.jpg)
