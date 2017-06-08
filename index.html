@@ -23,11 +23,38 @@
         </style>
     </head>
     <body>
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header navbar-right">
+              <a class="btn btn-primary navbar-btn" href="https://github.com/davicotico/jQuery-Menu-Editor" target="_self"><i class="glyphicon glyphicon-star"></i> Please, rate the repository</a>
+          </div>
+        </div>
+        </nav>
         <div class="container">
             <div class="row">
                 <div class="col-md-12"><h2>Demo</h2></div>
             </div>
             <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix"><h5 class="pull-left">Menu</h5>
+                            <div class="pull-right">
+                            <button id="btnReload" type="button" class="btn btn-default">
+                                <i class="glyphicon glyphicon-triangle-right"></i> Load Data</button>
+                            
+                            </div>
+                        </div>
+                        <div class="panel-body" id="cont">
+                            <ul id="myList" class="sortableLists list-group">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Output</button>
+                    </div>
+                    <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">Edit item</div>
@@ -75,32 +102,12 @@
                         </div>
                     </div>
                     <h2>Projects</h2>
-          <ul>
-              <li><a href="https://github.com/davicotico/PHP-Quick-Menu" target="_blank">PHP Quick Menu</a></li>
-              <li><a href="https://github.com/davicotico/Codeigniter-Form-Validation-Extension" target="_blank">Form Validator Extension for Codeigniter</a></li>
-              <li><a href="https://github.com/davicotico/Codeigniter-Imagify" target="_blank">Codeigniter Imagify (Image optimization)</a></li>
-              <li><a href="https://github.com/davicotico/jQuery-formHelper" target="_blank">jQuery formHelper</a></li>
-          </ul>
-                </div>
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix"><h5 class="pull-left">Menu</h5>
-                            <div class="pull-right">
-                            <button id="btnReload" type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-triangle-right"></i> Load Data</button>
-                            
-                            </div>
-                        </div>
-                        <div class="panel-body" id="cont">
-                            <ul id="myList" class="sortableLists list-group">
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                    <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Output</button>
-                    </div>
-                    <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
-                    </div>
+                    <ul>
+                        <li><a href="https://github.com/davicotico/PHP-Quick-Menu" target="_blank">PHP Quick Menu</a></li>
+                        <li><a href="https://github.com/davicotico/Codeigniter-Form-Validation-Extension" target="_blank">Form Validator Extension for Codeigniter</a></li>
+                        <li><a href="https://github.com/davicotico/Codeigniter-Imagify" target="_blank">Codeigniter Imagify (Image optimization)</a></li>
+                        <li><a href="https://github.com/davicotico/jQuery-formHelper" target="_blank">jQuery formHelper</a></li>
+                    </ul>
                 </div>
             </div>
             <hr>
