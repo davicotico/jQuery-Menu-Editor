@@ -107,7 +107,8 @@ var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPic
 ### Load data from a Json string
 We have the method setData:
 ```javascript
-editor.setData(strjson1);
+var strjson = '[{"href":"http://home.com","icon":"fa fa-home","text":"Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-2","children":[{"icon":"fa fa-map-marker","text":"Opcion6"}]}]}]}]';
+editor.setData(strjson);
 ```
 ### Output
 We have the function getString
