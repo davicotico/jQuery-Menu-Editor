@@ -150,7 +150,7 @@
                 el.trigger({ type: "change", icon: 'empty' });
             }
             else {
-                el.trigger({ type: "change", icon: icon }); 
+                el.trigger({ type: "change", icon: icon, iconClass: op.iconClass });
             }
             op.table.find('button.' + op.selectedClass).removeClass(op.selectedClass);
         }

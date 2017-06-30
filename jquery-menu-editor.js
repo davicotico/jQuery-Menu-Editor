@@ -952,7 +952,8 @@ function MenuEditor(idSelector, settings) {
 
     var iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
     iconPicker.on('change', function (e) {
-        $("#mnu_icon").val(e.icon);
+        var iconClass = (e.iconClass!=='') ? e.iconClass+' ' : '';
+        $("#mnu_icon").val(iconClass+e.icon);
     });
     var itemEdit = 0;
 
@@ -995,9 +996,17 @@ function MenuEditor(idSelector, settings) {
         });
         $("#mnu_text").focus();
         if (data.hasOwnProperty('icon')) {
-            iconPicker.iconpicker('setIcon', data.icon);
+            var icon = extractIcon(data.icon);
+            iconPicker.iconpicker('setIcon', icon);
         }
         $("#btnUpdate").removeAttr('disabled');
+        function extractIcon(icon){
+            var a = icon.split(' ');
+            if (a.length===1)
+                return a[0];
+            if (a.length===2)
+                return a[1];
+        }
     }
 
     function updateItem() {
@@ -1006,6 +1015,7 @@ function MenuEditor(idSelector, settings) {
             return;
         }
         var icon = $("#mnu_icon").val();
+        console.log(itemEdit.data('icon'));
         itemEdit.children().children('i').removeClass(itemEdit.data('icon')).addClass(icon);
         itemEdit.find('span.txt').first().text(text);
         itemEdit.data('text', text);
@@ -1023,7 +1033,7 @@ function MenuEditor(idSelector, settings) {
         var btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
         var grpBtns = $("<div>").addClass('btn-group pull-right').append(btnEdit).append(btnRemv);
         var textItem = $('<span>').addClass('txt').text(text);
-        var iconItem = $('<i>').addClass('fa ' + $("#mnu_icon").val());
+        var iconItem = $('<i>').addClass($("#mnu_icon").val());
         var div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(grpBtns);
         var li = $("<li>");
         var reg = new RegExp("^mnu_");
@@ -1064,7 +1074,7 @@ function MenuEditor(idSelector, settings) {
             $li.attr('id', v.text);
             $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.href);
             var $div = $('<div>');
-            var $i = $('<i>').addClass('fa ' + v.icon);
+            var $i = $('<i>').addClass(v.icon);
             var $span = $('<span>').addClass('txt').append(v.text);
             var $divbtn = $('<div>').addClass('btn-group pull-right');
             var $btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
