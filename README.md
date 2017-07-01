@@ -1,11 +1,11 @@
 # jQuery Menu Editor
 # See the [DEMO](http://codeignitertutoriales.com/demos/jqmenueditor/)
 # Features
-* Add, Update & Remove items menu
-* Multilevel Drag & Drop Items
-* Form item editor
+* Add, Update & Remove items from Menu
+* Multilevel Drag & Drop
+* Form Item Editor
 * Include IconPicker Plugin (https://victor-valencia.github.com/bootstrap-iconpicker)
-* Load the data from a JSON string 
+* Load data from JSON string 
 * The output is a Json string
 
 This project was inspirated and based in jQuery-Sortable-lists http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
