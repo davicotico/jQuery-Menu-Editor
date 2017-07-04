@@ -17,7 +17,7 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 
 # Documentation
 
-## Requeriments
+## Requirements
 * Bootstrap 3.x
 * jQuery
 * Bootstrap IconPicker 1.7
