@@ -1,46 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>jQuery Menu Editor - Demo 2</title>
+        <title>jQuery Menu Editor - Demo</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="bs-iconpicker/css/bootstrap-iconpicker.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="bs-iconpicker/css/bootstrap-iconpicker.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-        <style type="text/css">
-/*            ol.example li.placeholder:before {
-                position: absolute;
-            }
-            .list-group-item > div {margin-bottom: 5px;}*/
-        </style>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-                <a class="navbar-brand" href="http://codeignitertutoriales.com/jquery-menu-editor-multinivel/"><i class="glyphicon glyphicon-arrow-left"></i> Volver al Tutorial</a>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://codeignitertutoriales.com/jquery-menu-editor-multinivel/"><i class="glyphicon glyphicon-arrow-left"></i> Volver al Tutorial</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="http://codeignitertutoriales.com" target="_self"><i class="glyphicon glyphicon-home"></i> Blog</a></li>
+                        <li class="active"><a href="https://github.com/davicotico/jQuery-Menu-Editor" target="_self"><i class="fa fa-github"></i> Please, rate the repository</a></li>
+                    </ul>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://codeignitertutoriales.com" target="_self"><i class="glyphicon glyphicon-home"></i> Blog</a></li>
-                <li class="active"><a href="https://github.com/davicotico/jQuery-Menu-Editor" target="_self"><i class="fa fa-github"></i> Please, rate the repository</a></li>
-                </ul>
-            </div>
-        </div>
         </nav>
         <div class="container">
             <div class="row">
@@ -51,9 +44,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix"><h5 class="pull-left">Menu</h5>
                             <div class="pull-right">
-                            <button id="btnReload" type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-triangle-right"></i> Load Data</button>
-                            
+                                <button id="btnReload" type="button" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-triangle-right"></i> Load Data</button>
                             </div>
                         </div>
                         <div class="panel-body" id="cont">
@@ -62,7 +54,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                    <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Output</button>
+                        <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Output</button>
                     </div>
                     <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
                     </div>
@@ -79,7 +71,7 @@
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="mnu_text" name="mnu_text" placeholder="Text">
                                             <div class="input-group-btn">
-                                                <button id="mnu_iconpicker" class="btn btn-default" data-iconset="fontawesome" data-icon="" type="button"></button>
+                                                <button id="mnu_iconpicker" class="btn btn-default" data-iconset="fontawesome" type="button"></button>
                                             </div>
                                         </div>
                                     </div>
@@ -123,25 +115,23 @@
                 </div>
             </div>
             <hr>
-        <footer>
-        <p>&copy; 2017 David Ticona Saravia</p>
-        </footer>
+            <footer>
+                <p>&copy; 2017 David Ticona Saravia</p>
+            </footer>
         </div>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src='jquery-menu-editor.js?v2'></script>
+        <script src='jquery-menu-editor.js?v9'></script>
         <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
-        <script src='bs-iconpicker/js/bootstrap-iconpicker.js?v2'></script>
+        <script src='bs-iconpicker/js/bootstrap-iconpicker.js?v1'></script>
         <script>
             jQuery(document).ready(function () {
-                var strjson = '[{"href":"http://home.com","icon":"fa fa-home","text":"Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-2","children":[{"icon":"fa fa-map-marker","text":"Opcion6"}]}]}]}]';
+                var strjson = '[{"href":"http://home.com","icon":"fa fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-map-marker","text":"Opcion6"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-1-1"}]}]}]';
                 var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
                 var options = {
                     hintCss: {'border': '1px dashed #13981D'},
                     placeholderCss: {'background-color': 'gray'},
-                    ignoreClass: 'btn',
                     opener: {
-                        active: true,
                         as: 'html',
                         close: '<i class="fa fa-minus"></i>',
                         open: '<i class="fa fa-plus"></i>',
@@ -149,7 +139,7 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'Remove'});
+                var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit'});
                 $('#btnReload').on('click', function () {
                     editor.setData(strjson);
                 });

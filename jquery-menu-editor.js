@@ -2,10 +2,8 @@
  * jQuery Menu Editor
  * 
  * */
-(function ($)
-{
-    $.fn.sortableLists = function (options)
-    {
+(function ($){
+    $.fn.sortableLists = function (options){
         // Local variables. This scope is available for all the functions in this closure.
         var jQBody = $('body').css('position', 'relative'),
                 defaults = {
@@ -33,7 +31,8 @@
                         'z-index': 2500
                     },
                     opener: {
-                        active: false,
+                        active: true,
+                        as: 'html',
                         open: '',
                         close: '',
                         openerCss: {
@@ -50,7 +49,7 @@
                     insertZone: 50,
                     insertZonePlus: false,
                     scroll: 20,
-                    ignoreClass: '',
+                    ignoreClass: 'clickable', // ''
                     isAllowed: function (cEl, hint, target) {
                         return true;
                     }, // Params: current el., hint el.
@@ -92,8 +91,7 @@
                 opener = $('<span />')
                 .addClass('sortableListsOpener ' + setting.opener.openerClass)
                 .css(setting.opener.openerCss)
-                .on('mousedown', function (e)
-                {
+                .on('mousedown', function (e){
                     var li = $(this).closest('li');
 
                     if (li.hasClass('sortableListsClosed'))
@@ -107,14 +105,11 @@
                     return false; // Prevent default
                 });
 
-        if (setting.opener.as == 'class')
-        {
+        if (setting.opener.as == 'class'){
             opener.addClass(setting.opener.close);
-        } else if (setting.opener.as == 'html')
-        {
+        } else if (setting.opener.as == 'html'){
             opener.html(setting.opener.close);
-        } else
-        {
+        } else{
             opener.css('background-image', 'url(' + setting.opener.close + ')');
             console.error('jQuerySortableLists opener as background image is deprecated. In version 2.0.0 it will be removed. Use html instead please.');
         }
@@ -138,26 +133,20 @@
             win: $(window)
         };
 
-        if (setting.opener.active)
-        {
+        if (setting.opener.active){
             if (!setting.opener.open)
                 throw 'Opener.open value is not defined. It should be valid url, html or css class.';
             if (!setting.opener.close)
                 throw 'Opener.close value is not defined. It should be valid url, html or css class.';
 
-            $(this).find('li').each(function ()
-            {
+            $(this).find('li').each(function (){
                 var li = $(this);
 
-                if (li.children(setting.listSelector).length)
-                {
+                if (li.children(setting.listSelector).length){
                     opener.clone(true).prependTo(li.children('div').first());
-
-                    if (!li.hasClass('sortableListsOpen'))
-                    {
+                    if (!li.hasClass('sortableListsOpen')){
                         close(li);
-                    } else
-                    {
+                    } else{
                         open(li);
                     }
                 }
@@ -165,8 +154,7 @@
         }
 
         // Return this ensures chaining
-        return this.on('mousedown', function (e)
-        {
+        return this.on('mousedown', function (e){
             var target = $(e.target);
 
             if (state.isDragged !== false || (setting.ignoreClass && target.hasClass(setting.ignoreClass)))
@@ -180,8 +168,7 @@
                     rEl = $(this);
 
             // Check if el is not empty
-            if (el[ 0 ])
-            {
+            if (el[ 0 ]){
                 setting.onDragStart(e, el);
                 startDrag(e, el, rEl);
             }
@@ -194,8 +181,7 @@
          * @param el curr. dragged element
          * @param rEl root element
          */
-        function startDrag(e, el, rEl)
-        {
+        function startDrag(e, el, rEl){
             state.isDragged = true;
 
             var elMT = parseInt(el.css('margin-top')), // parseInt is necesary cause value has px at the end
@@ -248,8 +234,7 @@
          * @desc Start dragging
          * @param e event obj.
          */
-        function dragging(e)
-        {
+        function dragging(e){
             if (state.isDragged)
             {
                 var cEl = state.cEl,
@@ -257,22 +242,18 @@
                         win = state.win;
 
                 // event triggered by trigger() from setInterval does not have XY properties
-                if (!e.pageX)
-                {
+                if (!e.pageX){
                     setEventPos(e);
                 }
 
                 // Scrolling up
-                if (doc.scrollTop() > state.rootEl.offset.top - 10 && e.clientY < 50)
-                {
+                if (doc.scrollTop() > state.rootEl.offset.top - 10 && e.clientY < 50){
                     if (!state.upScroll) // Has to be here after cond. e.clientY < 50 cause else unsets the interval
                     {
                         setScrollUp(e);
-                    } else
-                    {
+                    } else{
                         e.pageY = e.pageY - setting.scroll;
-                        $('html, body').each(function (i)
-                        {
+                        $('html, body').each(function (i){
                             $(this).scrollTop($(this).scrollTop() - setting.scroll);
                         });
                         setCursorPos(e);
@@ -281,11 +262,9 @@
                 // Scrolling down
                 else if (doc.scrollTop() + win.height() < state.rootEl.offset.top + state.rootEl.el.outerHeight(false) + 10 && win.height() - e.clientY < 50)
                 {
-                    if (!state.downScroll)
-                    {
+                    if (!state.downScroll){
                         setScrollDown(e);
-                    } else
-                    {
+                    } else{
                         e.pageY = e.pageY + setting.scroll;
                         $('html, body').each(function (i)
                         {
@@ -293,8 +272,7 @@
                         });
                         setCursorPos(e);
                     }
-                } else
-                {
+                } else{
                     scrollStop(state);
                 }
 
@@ -304,11 +282,8 @@
                 cEl.el[ 0 ].style.visibility = 'hidden';  // This is important for the next row
                 state.oEl = oEl = elFromPoint(e.pageX, e.pageY);
                 cEl.el[ 0 ].style.visibility = 'visible';
-
                 showHint(e, state);
-
                 setCElPos(e, state);
-
             }
         }
 
@@ -316,8 +291,7 @@
          * @desc endDrag unbinds events mousemove/mouseup and removes redundant elements
          * @param e
          */
-        function endDrag(e)
-        {
+        function endDrag(e){
             var cEl = state.cEl,
                     hintNode = $('#sortableListsHint', state.rootEl.el),
                     hintStyle = hint[ 0 ].style,
@@ -325,12 +299,10 @@
                     isHintTarget = false, // if cEl will be placed to the hintNode
                     hintWrapperNode = $('#sortableListsHintWrapper');
 
-            if (hintStyle.display == 'block' && hintNode.length && state.isAllowed)
-            {
+            if (hintStyle.display == 'block' && hintNode.length && state.isAllowed) {
                 targetEl = hintNode;
                 isHintTarget = true;
-            } else
-            {
+            } else{
                 targetEl = state.placeholderNode;
                 isHintTarget = false;
             }
@@ -352,14 +324,12 @@
                                 .removeAttr('id')
                                 .removeClass(setting.hintWrapperClass);
 
-                        if (hintWrapperNode.length)
-                        {
+                        if (hintWrapperNode.length){
                             hintWrapperNode.prev('div').append(opener.clone(true));
                         }
 
                         // Directly removed placeholder looks bad. It jumps up if the hint is below.
-                        if (isHintTarget)
-                        {
+                        if (isHintTarget){
                             state.placeholderNode.slideUp(150, function ()
                             {
                                 state.placeholderNode.remove();
@@ -368,8 +338,7 @@
                                 setting.complete(cEl.el); // Have to be here cause is necessary to remove placeholder before complete call.
                                 state.isDragged = false;
                             });
-                        } else
-                        {
+                        } else{
                             state.placeholderNode.remove();
                             tidyEmptyLists();
                             setting.complete(cEl.el);
@@ -379,11 +348,9 @@
                     });
 
             scrollStop(state);
-
             state.doc
                     .unbind("mousemove", dragging)
                     .unbind("mouseup", endDrag);
-
 
         }
 
@@ -395,8 +362,7 @@
          * @param e
          * @return No value
          */
-        function setScrollUp(e)
-        {
+        function setScrollUp(e){
             if (state.upScroll)
                 return;
 
@@ -429,8 +395,7 @@
          * @param e
          * @return No value
          */
-        function setCursorPos(e)
-        {
+        function setCursorPos(e){
             state.pY = e.pageY;
             state.pX = e.pageX;
             state.cY = e.clientY;
@@ -442,8 +407,7 @@
          * @param e
          * @return No value
          */
-        function setEventPos(e)
-        {
+        function setEventPos(e){
             e.pageY = state.pY;
             e.pageX = state.pX;
             e.clientY = state.cY;
@@ -455,8 +419,7 @@
          * @param state
          * @return No value
          */
-        function scrollStop(state)
-        {
+        function scrollStop(state){
             clearInterval(state.upScroll);
             clearInterval(state.downScroll);
             // clearInterval have to be before upScroll/downScroll is set to false
@@ -470,10 +433,8 @@
          * @param state state object
          * @return No value
          */
-        function setCElPos(e, state)
-        {
+        function setCElPos(e, state){
             var cEl = state.cEl;
-
             cEl.el.css({
                 'top': e.pageY - cEl.xyOffsetDiff.Y - cEl.mT,
                 'left': e.pageX - cEl.xyOffsetDiff.X - cEl.mL
@@ -545,8 +506,7 @@
          * @param state
          * @return No value
          */
-        function showHint(e, state)
-        {
+        function showHint(e, state){
             var oEl = state.oEl;
 
             // If oEl is null or if this is the first call in dragging
@@ -556,8 +516,7 @@
             var oElH = oEl.outerHeight(false),
                     relY = e.pageY - oEl.offset().top;
 
-            if (setting.insertZonePlus)
-            {
+            if (setting.insertZonePlus){
                 if (14 > relY)  // Inserting on top
                 {
                     showOnTopPlus(e, oEl, 7 > relY);  // Last bool param express if hint insert outside/inside
@@ -565,8 +524,7 @@
                 {
                     showOnBottomPlus(e, oEl, oElH - 7 < relY);
                 }
-            } else
-            {
+            } else{
                 if (5 > relY)  // Inserting on top
                 {
                     showOnTop(e, oEl);
@@ -583,8 +541,7 @@
          * @param oEl oElement
          * @return No value
          */
-        function showOnTop(e, oEl)
-        {
+        function showOnTop(e, oEl){
             if ($('#sortableListsHintWrapper', state.rootEl.el).length)
             {
                 hint.unwrap();  // If hint is wrapped by ul/ol #sortableListsHintWrapper
@@ -602,8 +559,7 @@
                 oEl.before(hint);
             }
             // Hint inside the oEl
-            else
-            {
+            else {
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).first();
 
@@ -643,16 +599,13 @@
          * @param outside bool
          * @return No value
          */
-        function showOnTopPlus(e, oEl, outside)
-        {
-            if ($('#sortableListsHintWrapper', state.rootEl.el).length)
-            {
+        function showOnTopPlus(e, oEl, outside){
+            if ($('#sortableListsHintWrapper', state.rootEl.el).length){
                 hint.unwrap();  // If hint is wrapped by ul/ol #sortableListsHintWrapper
             }
 
             // Hint inside the oEl
-            if (!outside && e.pageX - oEl.offset().left > setting.insertZone)
-            {
+            if (!outside && e.pageX - oEl.offset().left > setting.insertZone){
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).first();
 
@@ -663,31 +616,25 @@
                 }
 
                 // Find out if is necessary to wrap hint by hintWrapper
-                if (!list.length)
-                {
+                if (!list.length){
                     children.first().after(hint);
                     hint.wrap(hintWrapper);
-                } else
-                {
+                } else{
                     list.prepend(hint);
                 }
 
-                if (state.oEl)
-                {
+                if (state.oEl){
                     open(oEl); // TODO:animation??? .children('ul,ol').css('display', 'block');
                 }
             }
             // Hint outside the oEl
-            else
-            {
+            else{
                 // Ensure display:none if hint will be next to the placeholder
-                if (oEl.prev('#sortableListsPlaceholder').length)
-                {
+                if (oEl.prev('#sortableListsPlaceholder').length){
                     hint.css('display', 'none');
                     return;
                 }
                 oEl.before(hint);
-
             }
 
             hint.css('display', 'block');
@@ -702,8 +649,7 @@
          * @param oEl oElement
          * @return No value
          */
-        function showOnBottom(e, oEl)
-        {
+        function showOnBottom(e, oEl){
             if ($('#sortableListsHintWrapper', state.rootEl.el).length)
             {
                 hint.unwrap();  // If hint is wrapped by ul/ol sortableListsHintWrapper
@@ -721,8 +667,7 @@
                 oEl.after(hint);
             }
             // Hint inside the oEl
-            else
-            {
+            else{
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).last();  // ul/ol || empty jQuery obj
 
@@ -733,17 +678,14 @@
                 }
 
                 // Find out if is necessary to wrap hint by hintWrapper
-                if (list.length)
-                {
+                if (list.length){
                     children.last().append(hint);
-                } else
-                {
+                } else{
                     oEl.append(hint);
                     hint.wrap(hintWrapper);
                 }
 
-                if (state.oEl)
-                {
+                if (state.oEl){
                     open(oEl); // TODO: animation???
                 }
 
@@ -762,16 +704,14 @@
          * @param outside bool
          * @return No value
          */
-        function showOnBottomPlus(e, oEl, outside)
-        {
+        function showOnBottomPlus(e, oEl, outside){
             if ($('#sortableListsHintWrapper', state.rootEl.el).length)
             {
                 hint.unwrap();  // If hint is wrapped by ul/ol sortableListsHintWrapper
             }
 
             // Hint inside the oEl
-            if (!outside && e.pageX - oEl.offset().left > setting.insertZone)
-            {
+            if (!outside && e.pageX - oEl.offset().left > setting.insertZone){
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).last();  // ul/ol || empty jQuery obj
 
@@ -798,16 +738,13 @@
 
             }
             // Hint outside the oEl
-            else
-            {
+            else{
                 // Ensure display:none if hint will be next to the placeholder
-                if (oEl.next('#sortableListsPlaceholder').length)
-                {
+                if (oEl.next('#sortableListsPlaceholder').length){
                     hint.css('display', 'none');
                     return;
                 }
                 oEl.after(hint);
-
             }
 
             hint.css('display', 'block');
@@ -821,8 +758,7 @@
          * @desc Handles opening nested lists
          * @param li
          */
-        function open(li)
-        {
+        function open(li){
             li.removeClass('sortableListsClosed').addClass('sortableListsOpen');
             li.children(setting.listSelector).css('display', 'block');
 
@@ -844,24 +780,17 @@
          * @desc Handles opening nested lists
          * @param li
          */
-        function close(li)
-        {
+        function close(li){
             li.removeClass('sortableListsOpen').addClass('sortableListsClosed');
             li.children(setting.listSelector).css('display', 'none');
-
             var opener = li.children('div').children('.sortableListsOpener').first();
-
-            if (setting.opener.as == 'html')
-            {
+            if (setting.opener.as == 'html'){
                 opener.html(setting.opener.open);
-            } else if (setting.opener.as == 'class')
-            {
+            } else if (setting.opener.as == 'class'){
                 opener.addClass(setting.opener.open).removeClass(setting.opener.close);
-            } else
-            {
+            } else{
                 opener.css('background-image', 'url(' + setting.opener.open + ')');
             }
-
         }
 
         /////// Enf of open/close handlers //////////////////////////////////////////////
@@ -869,23 +798,19 @@
          * @desc Places the currEl to the target place
          * @param cEl
          */
-        function tidyCurrEl(cEl)
-        {
+        function tidyCurrEl(cEl){
             var cElStyle = cEl.el[ 0 ].style;
-
             cEl.el.removeClass(setting.currElClass + ' ' + 'sortableListsCurrent');
             cElStyle.top = '0';
             cElStyle.left = '0';
             cElStyle.position = 'relative';
             cElStyle.width = 'auto';
-
         }
 
         /**
          * @desc Removes empty lists and redundant openers
          */
-        function tidyEmptyLists()
-        {
+        function tidyEmptyLists(){
             // Remove every empty ul/ol from root and also with .sortableListsOpener
             // hintWrapper can not be removed before the hint
             $(setting.listSelector, state.rootEl.el).each(function (i)
@@ -897,22 +822,19 @@
                 }
             }
             );
-
         }
-
     };
 
     /**
      * List to JSON Array
      * @author David Ticona Saravia
-     * @desc Json recursivo
+     * @desc Get the json from html list
      * @return {array} Array
      */
     $.fn.sortableListsToJson = function ()
     {
         var arr = [];
-        $(this).children('li').each(function ()
-        {
+        $(this).children('li').each(function () {
             var li = $(this);
             var object = li.data();
             arr.push(object);
@@ -930,17 +852,18 @@
 /**
  * @author David Ticona Saravia
  * @param {string} idSelector Attr ID
- * @param {object} settings All Settings
+ * @param {object} options All Settings
  * */
-function MenuEditor(idSelector, settings) {
-    
+function MenuEditor(idSelector, options) {
     var $main = $("#" + idSelector);
-    var labelEdit = settings.labelEdit || 'E';
-    var labelRemove = settings.labelRemove || 'X';
+    var settings = {
+        labelEdit: '<i class="glyphicon glyphicon-edit clickable"></i>',
+        labelRemove: '<i class="glyphicon glyphicon-remove clickable"></i>',
+        iconPicker: {}
+    };
+    $.extend(settings, options);
     var sortableReady = false;
-    
     if ('data' in settings) {
-        console.log('no');
         var data = jsonToObject(settings.data);
         if (data !== null) {
             var menu = createMenu(data, 0);
@@ -948,12 +871,13 @@ function MenuEditor(idSelector, settings) {
         }
     }
     var iconPickerOpt = settings.iconPicker;
+    
     var options = settings.listOptions;
 
     var iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
     iconPicker.on('change', function (e) {
-        var iconClass = (e.iconClass!=='') ? e.iconClass+' ' : '';
-        $("#mnu_icon").val(iconClass+e.icon);
+        var iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
+        $("#mnu_icon").val(iconClass + e.icon);
     });
     var itemEdit = 0;
 
@@ -969,17 +893,17 @@ function MenuEditor(idSelector, settings) {
 
     $(document).on('click', '.btnRemove', function (e) {
         e.preventDefault();
-        var list = $(this).closest('ul');
-        $(this).closest('li').remove();
-
-        var isMainContainer = false;
-        if (typeof list.attr('id') !== 'undefined') {
-            isMainContainer = (list.attr('id').toString() === idSelector);
-        }
-
-        if ((!list.children().length) && (!isMainContainer)) {
-            list.prev('div').children('.sortableListsOpener').first().remove();
-            list.remove();
+        if (confirm("Esta seguro que desea eliminar el item?")){
+            var list = $(this).closest('ul');
+            $(this).closest('li').remove();
+            var isMainContainer = false;
+            if (typeof list.attr('id') !== 'undefined') {
+                isMainContainer = (list.attr('id').toString() === idSelector);
+            }
+            if ((!list.children().length) && (!isMainContainer)) {
+                list.prev('div').children('.sortableListsOpener').first().remove();
+                list.remove();
+            }
         }
     });
 
@@ -989,6 +913,45 @@ function MenuEditor(idSelector, settings) {
         editItem(this);
     });
 
+    $main.on('click', '.btnUp', function (e) {
+        e.preventDefault();
+        var $li = $(this).closest('li');
+        $li.prev('li').before($li);
+    });
+    $main.on('click', '.btnDown', function (e) {
+        e.preventDefault();
+        var $li = $(this).closest('li');
+        $li.next('li').after($li);
+    });
+    $main.on('click', '.btnOut', function (e) {
+        e.preventDefault();
+        var list = $(this).closest('ul');
+        var $li = $(this).closest('li');
+        var $liParent = $li.closest('ul').closest('li');
+        $liParent.after($li);
+        if (list.children().length <= 0) {
+            list.prev('div').children('.sortableListsOpener').first().remove();
+            list.remove();
+        }
+    });
+    $main.on('click', '.btnIn', function (e) {
+        e.preventDefault();
+        var $li = $(this).closest('li');
+        var $prev = $li.prev('li');
+        if ($prev.length > 0) {
+            var $ul = $prev.children('ul');
+            if ($ul.length > 0)
+                $ul.append($li);
+            else {
+                var $ul = $('<ul>');
+                $prev.append($ul);
+                $ul.append($li);
+                $prev.addClass('sortableListsOpen');
+                TOpener($prev);
+            }
+        }
+    });
+    
     function editItem(item) {
         var data = $(item).closest('li').data();
         $.each(data, function (p, v) {
@@ -1000,11 +963,11 @@ function MenuEditor(idSelector, settings) {
             iconPicker.iconpicker('setIcon', icon);
         }
         $("#btnUpdate").removeAttr('disabled');
-        function extractIcon(icon){
+        function extractIcon(icon) {
             var a = icon.split(' ');
-            if (a.length===1)
+            if (a.length === 1)
                 return a[0];
-            if (a.length===2)
+            if (a.length === 2)
                 return a[1];
         }
     }
@@ -1015,7 +978,6 @@ function MenuEditor(idSelector, settings) {
             return;
         }
         var icon = $("#mnu_icon").val();
-        console.log(itemEdit.data('icon'));
         itemEdit.children().children('i').removeClass(itemEdit.data('icon')).addClass(icon);
         itemEdit.find('span.txt').first().text(text);
         itemEdit.data('text', text);
@@ -1029,12 +991,10 @@ function MenuEditor(idSelector, settings) {
     function addItem() {
         var arrForm = $("#frmEdit").serializeArray();
         var text = $("#mnu_text").val();
-        var btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
-        var btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
-        var grpBtns = $("<div>").addClass('btn-group pull-right').append(btnEdit).append(btnRemv);
+        var btnGroup = TButtonGroup();
         var textItem = $('<span>').addClass('txt').text(text);
         var iconItem = $('<i>').addClass($("#mnu_icon").val());
-        var div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(grpBtns);
+        var div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
         var li = $("<li>");
         var reg = new RegExp("^mnu_");
         $.each(arrForm, function (k, v) {
@@ -1060,26 +1020,30 @@ function MenuEditor(idSelector, settings) {
      * @param {int} depth Depth sub-menu
      * @return {object} jQuery Object
      * */
-    function createMenu (arrayItem, depth) {
+    function createMenu(arrayItem, depth) {
         var level = (typeof (depth) === 'undefined') ? 0 : depth;
-        var $elem; //aqui el problema
+        var $elem;
         if (level === 0) {
             $elem = $main;
         } else {
             $elem = $('<ul>');
         }
         $.each(arrayItem, function (k, v) {
-            var isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
+            let isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
             var $li = $('<li>');
             $li.attr('id', v.text);
-            $li.addClass('list-group-item').data('text', v.text).data('icon', v.icon).data('href', v.href);
+            $li.addClass('list-group-item');
+            let itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
+            let v2 = $.extend({}, v);
+            if (isParent){ 
+                delete v2['children'];
+            }
+            $.extend(itemObject, v2);
+            $li.data(itemObject);
             var $div = $('<div>');
             var $i = $('<i>').addClass(v.icon);
             var $span = $('<span>').addClass('txt').append(v.text);
-            var $divbtn = $('<div>').addClass('btn-group pull-right');
-            var $btnEdit = TButton({classCss: 'btn btn-default btn-xs btnEdit', text: labelEdit});
-            var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: labelRemove});
-            $divbtn.append($btnEdit).append($btnRemv);
+            var $divbtn =  TButtonGroup();
             $div.append($i).append("&nbsp;").append($span).append($divbtn);
             $li.append($div);
             if (isParent) {
@@ -1098,76 +1062,90 @@ function MenuEditor(idSelector, settings) {
         }
         return obj;
     }
-    function TButton(attr) {
-        return $("<a>").addClass(attr.classCss).attr("href", "#").text(attr.text);
-    }
-    
-    this.setData = function(strJson) {
+
+    this.setData = function (strJson) {
         var arrayItem = jsonToObject(strJson);
         if (arrayItem !== null) {
             $main.empty();
             var menu = createMenu(arrayItem);
-            if (!sortableReady){
+            if (!sortableReady) {
                 menu.sortableLists(settings.listOptions);
                 sortableReady = true;
-            } else{
+            } else {
                 setOpeners();
             }
-            //$main.append(menu);
         }
     };
-    this.getString = function(){
+    this.getString = function () {
         var obj = $main.sortableListsToJson();
         return JSON.stringify(obj);
     };
-    function setOpeners(){
-        $main.find('li').each(function (){
-            var li = $(this);
-            if (li.children('ul').length){
-                var opener = $('<span>')
-                .addClass('sortableListsOpener ' + options.opener.openerClass)
+    
+    function TButtonGroup() {
+        var $divbtn = $('<div>').addClass('btn-group pull-right');
+        var $btnEdit = TButton({classCss: 'btn btn-primary btn-xs btnEdit', text: settings.labelEdit});
+        var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: settings.labelRemove});
+        var $btnUp = TButton({classCss: 'btn btn-default btn-xs btnUp', text: '<i class="glyphicon glyphicon-chevron-up clickable"></i>'});
+        var $btnDown = TButton({classCss: 'btn btn-default btn-xs btnDown', text: '<i class="glyphicon glyphicon-chevron-down clickable"></i>'});
+        var $btnOut = TButton({classCss: 'btn btn-default btn-xs btnOut', text: '<i class="glyphicon glyphicon-save clickable"></i>'});
+        var $btnIn = TButton({classCss: 'btn btn-default btn-xs btnIn', text: '<i class="glyphicon glyphicon-export clickable"></i>'});
+        $divbtn.append($btnUp).append($btnDown).append($btnIn).append($btnOut).append($btnEdit).append($btnRemv);
+        return $divbtn;
+    }
+    
+    function TButton(attr) {
+        return $("<a>").addClass(attr.classCss).addClass('clickable').attr("href", "#").html(attr.text);
+    }
+    
+    function TOpener(li){
+        var opener = $('<span>').addClass('sortableListsOpener ' + options.opener.openerClass)
                 .css(options.opener.openerCss)
-                .on('mousedown', function (e)
-                {
+                .on('mousedown', function (e){
                     var li = $(this).closest('li');
-                    if (li.hasClass('sortableListsClosed')){
+                    if (li.hasClass('sortableListsClosed')) {
                         open(li);
-                    } else{
+                    } else {
                         close(li);
                     }
                     return false; // Prevent default
                 });
-                opener.prependTo(li.children('div').first());
-                if (!li.hasClass('sortableListsOpen')){
-                    close(li);
-                } else{
-                    open(li);
-                }
+        opener.prependTo(li.children('div').first());
+        if (!li.hasClass('sortableListsOpen')) {
+            close(li);
+        } else {
+            open(li);
+        }
+    }
+    
+    function setOpeners() {
+        $main.find('li').each(function () {
+            var li = $(this);
+            if (li.children('ul').length) {
+                TOpener(li);
             }
         });
     }
-    function open(li)
-    {
+    function open(li){
         li.removeClass('sortableListsClosed').addClass('sortableListsOpen');
         li.children('ul').css('display', 'block');
         var opener = li.children('div').children('.sortableListsOpener').first();
-        if (options.opener.as === 'html'){
+        if (options.opener.as === 'html') {
             opener.html(options.opener.close);
-        } else if (options.opener.as === 'class'){
+        } else if (options.opener.as === 'class') {
             opener.addClass(options.opener.close).removeClass(options.opener.open);
-        } else{
+        } else {
             opener.css('background-image', 'url(' + options.opener.close + ')');
         }
     }
-    function close(li){
+    function close(li) {
         li.removeClass('sortableListsOpen').addClass('sortableListsClosed');
         li.children('ul').css('display', 'none');
         var opener = li.children('div').children('.sortableListsOpener').first();
-        if (options.opener.as === 'html'){
+        if (options.opener.as === 'html') {
             opener.html(options.opener.open);
-        } else if (options.opener.as === 'class'){
+        } else if (options.opener.as === 'class') {
             opener.addClass(options.opener.open).removeClass(options.opener.close);
-        } else{
+        } else {
             opener.css('background-image', 'url(' + options.opener.open + ')');
         }
     }
