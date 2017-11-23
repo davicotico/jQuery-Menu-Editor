@@ -44,31 +44,32 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 </div>
 ```
 ### Creating the form
-Is important to preserve the prefix 'mnu_' at the input elements
+* The inputs for items should be have the class="item-menu"
+* The icon picker should be have the id=[LIST_ID]+"_icon"
 ```html
 <form id="frmEdit" class="form-horizontal">
-    <input type="hidden" name="mnu_icon" id="mnu_icon">
     <div class="form-group">
-        <label for="mnu_text" class="col-sm-2 control-label">Text</label>
+        <label for="text" class="col-sm-2 control-label">Text</label>
         <div class="col-sm-10">
             <div class="input-group">
-                <input type="text" class="form-control" id="mnu_text" name="mnu_text" placeholder="Text">
+                <input type="text" class="form-control item-menu" id="text" name="text" placeholder="Text">
                 <div class="input-group-btn">
-                    <button id="mnu_iconpicker" class="btn btn-default" data-iconset="fontawesome" data-icon="" type="button"></button>
+                    <button id="myEditor_icon" class="btn btn-default" data-iconset="fontawesome" data-icon="" type="button"></button>
                 </div>
+                <input type="hidden" name="icon" class="item-menu">
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="mnu_href" class="col-sm-2 control-label">URL</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="mnu_href" name="mnu_href" placeholder="URL">
+            <input type="text" class="form-control item-menu" id="href" name="href" placeholder="URL">
         </div>
     </div>
     <div class="form-group">
-        <label for="mnu_target" class="col-sm-2 control-label">Target</label>
+        <label for="target" class="col-sm-2 control-label">Target</label>
         <div class="col-sm-10">
-            <select id="mnu_target" name="mnu_target" class="form-control">
+            <select name="target" id="target" class="form-control item-menu">
                 <option value="_self">Self</option>
                 <option value="_blank">Blank</option>
                 <option value="_top">Top</option>
@@ -76,9 +77,9 @@ Is important to preserve the prefix 'mnu_' at the input elements
         </div>
     </div>
     <div class="form-group">
-        <label for="mnu_title" class="col-sm-2 control-label">Tooltip</label>
+        <label for="title" class="col-sm-2 control-label">Tooltip</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="mnu_title" name="mnu_title" placeholder="Text">
+            <input type="text" class="form-control item-menu" id="title" name="title" placeholder="Text">
         </div>
     </div>
 </form>
