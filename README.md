@@ -39,7 +39,7 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 ### Creating the Drag & Drop list
 ```html
 <div class="panel-body" id="cont">
-    <ul id="myList" class="sortableLists list-group">
+    <ul id="myEditor" class="sortableLists list-group">
     </ul>
 </div>
 ```
@@ -101,7 +101,7 @@ var options = {
         openerClass: 'btn btn-success btn-xs'
     }
 };
-var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'Remove'});
+var editor = new MenuEditor('myEditor', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'Remove'});
 ```
 
 ### Load data from a Json string
