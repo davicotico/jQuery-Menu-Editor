@@ -88,20 +88,15 @@
                 .css(setting.listsCss)
                 .css(setting.hintWrapperCss),
                 // Is +/- ikon to open/close nested lists
-                opener = $('<span />')
-                .addClass('sortableListsOpener ' + setting.opener.openerClass)
+                opener = $('<span />').addClass('sortableListsOpener ' + setting.opener.openerClass)
                 .css(setting.opener.openerCss)
                 .on('mousedown', function (e){
                     var li = $(this).closest('li');
-
-                    if (li.hasClass('sortableListsClosed'))
-                    {
+                    if (li.hasClass('sortableListsClosed')){
                         open(li);
-                    } else
-                    {
+                    } else{
                         close(li);
                     }
-
                     return false; // Prevent default
                 });
 
@@ -156,17 +151,13 @@
         // Return this ensures chaining
         return this.on('mousedown', function (e){
             var target = $(e.target);
-
             if (state.isDragged !== false || (setting.ignoreClass && target.hasClass(setting.ignoreClass)))
                 return; // setting.ignoreClass is checked cause hasClass('') returns true
-
             // Solves selection/range highlighting
             e.preventDefault();
-
             // El must be li in jQuery object
             var el = target.closest('li'),
                     rEl = $(this);
-
             // Check if el is not empty
             if (el[ 0 ]){
                 setting.onDragStart(e, el);
@@ -223,11 +214,7 @@
             });
 
             hint.css('height', elIH);
-
-            state.doc
-                    .on('mousemove', dragging)
-                    .on('mouseup', endDrag);
-
+            state.doc.on('mousemove', dragging).on('mouseup', endDrag);
         }
 
         /**
@@ -275,10 +262,8 @@
                 } else{
                     scrollStop(state);
                 }
-
                 // Script needs to know old oEl
                 state.oElOld = state.oEl;
-
                 cEl.el[ 0 ].style.visibility = 'hidden';  // This is important for the next row
                 state.oEl = oEl = elFromPoint(e.pageX, e.pageY);
                 cEl.el[ 0 ].style.visibility = 'visible';
@@ -306,9 +291,7 @@
                 targetEl = state.placeholderNode;
                 isHintTarget = false;
             }
-
             offset = targetEl.offset();
-
             cEl.el.animate({left: offset.left - state.cEl.mL, top: offset.top - state.cEl.mT}, 250,
                     function ()  // complete callback
                     {
@@ -330,8 +313,7 @@
 
                         // Directly removed placeholder looks bad. It jumps up if the hint is below.
                         if (isHintTarget){
-                            state.placeholderNode.slideUp(150, function ()
-                            {
+                            state.placeholderNode.slideUp(150, function (){
                                 state.placeholderNode.remove();
                                 tidyEmptyLists();
                                 setting.onChange(cEl.el);
@@ -348,14 +330,11 @@
                     });
 
             scrollStop(state);
-            state.doc
-                    .unbind("mousemove", dragging)
-                    .unbind("mouseup", endDrag);
-
+            state.doc.unbind("mousemove", dragging).unbind("mouseup", endDrag);
         }
 
-        ////////Helpers///////////////////////////////////////////////////////////////////////////////////////
-        //////// Scroll handlers /////////////////////////////////////////////////////////////////////////////
+        ////////Helpers///////////////////////////////////////////
+        //////// Scroll handlers /////////////////////////////////
 
         /**
          * @desc Ensures autoscroll up.
@@ -365,12 +344,9 @@
         function setScrollUp(e){
             if (state.upScroll)
                 return;
-
-            state.upScroll = setInterval(function ()
-            {
+            state.upScroll = setInterval(function (){
                 state.doc.trigger('mousemove');
             }, 50);
-
         }
 
         /**
@@ -378,16 +354,12 @@
          * @param e
          * @return No value
          */
-        function setScrollDown(e)
-        {
+        function setScrollDown(e){
             if (state.downScroll)
                 return;
-
-            state.downScroll = setInterval(function ()
-            {
+            state.downScroll = setInterval(function (){
                 state.doc.trigger('mousemove');
             }, 50);
-
         }
 
         /**
@@ -448,8 +420,7 @@
          * @param y e.pageY
          * @return null|jQuery object
          */
-        function elFromPoint(x, y)
-        {
+        function elFromPoint(x, y){
             if (!document.elementFromPoint)
                 return null;
 
@@ -458,23 +429,19 @@
             var isRelEFP = state.isRelEFP;
 
             // isRelative === null means it is not checked yet
-            if (isRelEFP === null)
-            {
+            if (isRelEFP === null){
                 var s, res;
-                if ((s = state.doc.scrollTop()) > 0)
-                {
+                if ((s = state.doc.scrollTop()) > 0){
                     isRelEFP = ((res = document.elementFromPoint(0, s + $(window).height() - 1)) == null
                             || res.tagName.toUpperCase() == 'HTML');  // IE8 returns html
                 }
-                if ((s = state.doc.scrollLeft()) > 0)
-                {
+                if ((s = state.doc.scrollLeft()) > 0){
                     isRelEFP = ((res = document.elementFromPoint(s + $(window).width() - 1, 0)) == null
                             || res.tagName.toUpperCase() == 'HTML');  // IE8 returns html
                 }
             }
 
-            if (isRelEFP)
-            {
+            if (isRelEFP){
                 x -= state.doc.scrollLeft();
                 y -= state.doc.scrollTop();
             }
@@ -570,17 +537,14 @@
                 }
 
                 // Find out if is necessary to wrap hint by hintWrapper
-                if (!list.length)
-                {
+                if (!list.length){
                     children.first().after(hint);
                     hint.wrap(hintWrapper);
-                } else
-                {
+                } else{
                     list.prepend(hint);
                 }
 
-                if (state.oEl)
-                {
+                if (state.oEl){
                     open(oEl); // TODO:animation??? .children('ul,ol').css('display', 'block');
                 }
 
@@ -640,7 +604,6 @@
             hint.css('display', 'block');
             // Ensures posible formating of elements. Second call is in the endDrag method.
             state.isAllowed = setting.isAllowed(state.cEl.el, hint, hint.parents('li').first());
-
         }
 
         /**
@@ -656,11 +619,9 @@
             }
 
             // Hint outside the oEl
-            if (e.pageX - oEl.offset().left < setting.insertZone)
-            {
+            if (e.pageX - oEl.offset().left < setting.insertZone){
                 // Ensure display:none if hint will be next to the placeholder
-                if (oEl.next('#sortableListsPlaceholder').length)
-                {
+                if (oEl.next('#sortableListsPlaceholder').length){
                     hint.css('display', 'none');
                     return;
                 }
@@ -705,8 +666,7 @@
          * @return No value
          */
         function showOnBottomPlus(e, oEl, outside){
-            if ($('#sortableListsHintWrapper', state.rootEl.el).length)
-            {
+            if ($('#sortableListsHintWrapper', state.rootEl.el).length){
                 hint.unwrap();  // If hint is wrapped by ul/ol sortableListsHintWrapper
             }
 
@@ -715,22 +675,18 @@
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).last();  // ul/ol || empty jQuery obj
 
-                if (list.children().last().is('#sortableListsPlaceholder'))
-                {
+                if (list.children().last().is('#sortableListsPlaceholder')){
                     hint.css('display', 'none');
                     return;
                 }
 
                 // Find out if is necessary to wrap hint by hintWrapper
-                if (list.length)
-                {
+                if (list.length){
                     children.last().append(hint);
-                } else
-                {
+                } else{
                     oEl.append(hint);
                     hint.wrap(hintWrapper);
                 }
-
                 if (state.oEl)
                 {
                     open(oEl); // TODO: animation???
@@ -813,8 +769,7 @@
         function tidyEmptyLists(){
             // Remove every empty ul/ol from root and also with .sortableListsOpener
             // hintWrapper can not be removed before the hint
-            $(setting.listSelector, state.rootEl.el).each(function (i)
-            {
+            $(setting.listSelector, state.rootEl.el).each(function (i){
                 if (!$(this).children().length)
                 {
                     $(this).prev('div').children('.sortableListsOpener').first().remove();
@@ -862,7 +817,11 @@ function MenuEditor(idSelector, options) {
         iconPicker: {}
     };
     $.extend(settings, options);
+    var itemEdit = 0;
     var sortableReady = false;
+    var $form = null;
+    var $updateButton = null;
+    
     if ('data' in settings) {
         var data = jsonToObject(settings.data);
         if (data !== null) {
@@ -873,22 +832,10 @@ function MenuEditor(idSelector, options) {
     var iconPickerOpt = settings.iconPicker;
     
     var options = settings.listOptions;
-
-    var iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
+    var iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
     iconPicker.on('change', function (e) {
-        var iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
-        $("#mnu_icon").val(iconClass + e.icon);
-    });
-    var itemEdit = 0;
-
-    $("#btnUpdate").click(function (e) {
-        e.preventDefault();
-        updateItem();
-    });
-
-    $("#btnAdd").click(function (e) {
-        e.preventDefault();
-        addItem();
+        let iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
+        $form.find("[name=icon]").val(iconClass + e.icon);
     });
 
     $(document).on('click', '.btnRemove', function (e) {
@@ -953,18 +900,18 @@ function MenuEditor(idSelector, options) {
     });
     
     function editItem(item) {
-        var data = $(item).closest('li').data();
+        let data = $(item).closest('li').data();
         $.each(data, function (p, v) {
-            $("#mnu_" + p).val(v);
+            $form.find("[name=" + p + "]").val(v);
         });
-        $("#mnu_text").focus();
+        $form.find(".item-menu").first().focus();
         if (data.hasOwnProperty('icon')) {
-            var icon = extractIcon(data.icon);
+            let icon = extractIcon(data.icon);
             iconPicker.iconpicker('setIcon', icon);
         }
-        $("#btnUpdate").removeAttr('disabled');
+        $updateButton.removeAttr('disabled');
         function extractIcon(icon) {
-            var a = icon.split(' ');
+            let a = icon.split(' ');
             if (a.length === 1)
                 return a[0];
             if (a.length === 2)
@@ -972,46 +919,55 @@ function MenuEditor(idSelector, options) {
         }
     }
 
-    function updateItem() {
-        var text = $("#mnu_text").val();
-        if (itemEdit === 0) {
+    this.setForm = function(form){
+        $form = form;
+    };
+    this.getForm = function(){
+        return $form;
+    };
+    this.setUpdateButton = function($btn){
+        $updateButton = $btn;
+    };
+    this.getUpdateButton = function(){
+        return $updateButton;
+    };
+    this.getCurrentItem = function(){
+        return itemEdit;
+    };
+    this.update = function(){
+        let $cEl = this.getCurrentItem();
+        if ($cEl===0){
             return;
         }
-        var icon = $("#mnu_icon").val();
-        itemEdit.children().children('i').removeClass(itemEdit.data('icon')).addClass(icon);
-        itemEdit.find('span.txt').first().text(text);
-        itemEdit.data('text', text);
-        itemEdit.data('href', $("#mnu_href").val());
-        itemEdit.data('target', $("#mnu_target").val());
-        itemEdit.data('title', $("#mnu_title").val());
-        itemEdit.data('icon', icon);
-        reset();
-    }
-
-    function addItem() {
-        var arrForm = $("#frmEdit").serializeArray();
-        var text = $("#mnu_text").val();
-        var btnGroup = TButtonGroup();
-        var textItem = $('<span>').addClass('txt').text(text);
-        var iconItem = $('<i>').addClass($("#mnu_icon").val());
-        var div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
-        var li = $("<li>");
-        var reg = new RegExp("^mnu_");
-        $.each(arrForm, function (k, v) {
-            if (reg.test(v.name)) {
-                var name = v.name.replace(reg, '');
-                li.data(name, v.value);
-            }
+        let oldIcon = $cEl.data('icon');
+        $form.find('.item-menu').each(function(){
+            $cEl.data($(this).attr('name'), $(this).val());
         });
-        li.addClass('list-group-item').append(div);
-        $('#' + idSelector).append(li);
-        reset();
-    }
-    function reset() {
-        $("#frmEdit")[0].reset();
-        iconPicker = $('#mnu_iconpicker').iconpicker(iconPickerOpt);
+        $cEl.children().children('i').removeClass(oldIcon).addClass($cEl.data('icon'));
+        $cEl.find('span.txt').first().text($cEl.data('text'));
+        resetForm();
+    };
+   
+    this.add = function(){
+        let data = {};
+        $form.find('.item-menu').each(function(){
+            data[$(this).attr('name')] = $(this).val();
+        });
+        let btnGroup = TButtonGroup();
+        let textItem = $('<span>').addClass('txt').text(data.text);
+        let iconItem = $('<i>').addClass(data.icon);
+        let div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
+        let $li = $("<li>").data(data);
+        $li.addClass('list-group-item').append(div);
+        $main.append($li);
+        resetForm();
+    };
+    
+    function resetForm() {
+        $form[0].reset();
+        iconPicker = iconPicker.iconpicker(iconPickerOpt);
         iconPicker.iconpicker('setIcon', 'empty');
-        $("#btnUpdate").attr('disabled', true);
+        $updateButton.attr('disabled', true);
         itemEdit = 0;
     }
 
@@ -1077,18 +1033,18 @@ function MenuEditor(idSelector, options) {
         }
     };
     this.getString = function () {
-        var obj = $main.sortableListsToJson();
+        let obj = $main.sortableListsToJson();
         return JSON.stringify(obj);
     };
     
     function TButtonGroup() {
-        var $divbtn = $('<div>').addClass('btn-group pull-right');
-        var $btnEdit = TButton({classCss: 'btn btn-primary btn-xs btnEdit', text: settings.labelEdit});
-        var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: settings.labelRemove});
-        var $btnUp = TButton({classCss: 'btn btn-default btn-xs btnUp', text: '<i class="glyphicon glyphicon-chevron-up clickable"></i>'});
-        var $btnDown = TButton({classCss: 'btn btn-default btn-xs btnDown', text: '<i class="glyphicon glyphicon-chevron-down clickable"></i>'});
-        var $btnOut = TButton({classCss: 'btn btn-default btn-xs btnOut', text: '<i class="glyphicon glyphicon-save clickable"></i>'});
-        var $btnIn = TButton({classCss: 'btn btn-default btn-xs btnIn', text: '<i class="glyphicon glyphicon-export clickable"></i>'});
+        let $divbtn = $('<div>').addClass('btn-group pull-right');
+        let $btnEdit = TButton({classCss: 'btn btn-primary btn-xs btnEdit', text: settings.labelEdit});
+        let $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: settings.labelRemove});
+        let $btnUp = TButton({classCss: 'btn btn-default btn-xs btnUp btnMove', text: '<i class="glyphicon glyphicon-chevron-up clickable"></i>'});
+        let $btnDown = TButton({classCss: 'btn btn-default btn-xs btnDown btnMove', text: '<i class="glyphicon glyphicon-chevron-down clickable"></i>'});
+        let $btnOut = TButton({classCss: 'btn btn-default btn-xs btnOut btnMove', text: '<i class="glyphicon glyphicon-save clickable"></i>'});
+        let $btnIn = TButton({classCss: 'btn btn-default btn-xs btnIn btnMove', text: '<i class="glyphicon glyphicon-export clickable"></i>'});
         $divbtn.append($btnUp).append($btnDown).append($btnIn).append($btnOut).append($btnEdit).append($btnRemv);
         return $divbtn;
     }

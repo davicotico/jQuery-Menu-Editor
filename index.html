@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="panel-body" id="cont">
-                            <ul id="myList" class="sortableLists list-group">
+                            <ul id="myEditor" class="sortableLists list-group">
                             </ul>
                         </div>
                     </div>
@@ -64,28 +64,28 @@
                         <div class="panel-heading">Edit item</div>
                         <div class="panel-body">
                             <form id="frmEdit" class="form-horizontal">
-                                <input type="hidden" name="mnu_icon" id="mnu_icon">
                                 <div class="form-group">
-                                    <label for="mnu_text" class="col-sm-2 control-label">Text</label>
+                                    <label for="text" class="col-sm-2 control-label">Text</label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="mnu_text" name="mnu_text" placeholder="Text">
+                                            <input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text">
                                             <div class="input-group-btn">
-                                                <button id="mnu_iconpicker" class="btn btn-default" data-iconset="fontawesome" type="button"></button>
+                                                <button type="button" id="myEditor_icon" class="btn btn-default" data-iconset="fontawesome"></button>
                                             </div>
+                                            <input type="hidden" name="icon" class="item-menu">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mnu_href" class="col-sm-2 control-label">URL</label>
+                                    <label for="href" class="col-sm-2 control-label">URL</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="mnu_href" name="mnu_href" placeholder="URL">
+                                        <input type="text" class="form-control item-menu" id="href" name="href" placeholder="URL">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mnu_target" class="col-sm-2 control-label">Target</label>
+                                    <label for="target" class="col-sm-2 control-label">Target</label>
                                     <div class="col-sm-10">
-                                        <select id="mnu_target" name="mnu_target" class="form-control">
+                                        <select name="target" id="target" class="form-control item-menu">
                                             <option value="_self">Self</option>
                                             <option value="_blank">Blank</option>
                                             <option value="_top">Top</option>
@@ -93,9 +93,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mnu_title" class="col-sm-2 control-label">Tooltip</label>
+                                    <label for="title" class="col-sm-2 control-label">Tooltip</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="mnu_title" name="mnu_title" placeholder="Text">
+                                        <input type="text" name="title" class="form-control item-menu" id="title" placeholder="Tooltip">
                                     </div>
                                 </div>
                             </form>
@@ -121,9 +121,9 @@
         </div>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src='jquery-menu-editor.js?v9'></script>
+        <script src='jquery-menu-editor.js'></script>
         <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
-        <script src='bs-iconpicker/js/bootstrap-iconpicker.js?v1'></script>
+        <script src='bs-iconpicker/js/bootstrap-iconpicker.js'></script>
         <script>
             jQuery(document).ready(function () {
                 var strjson = '[{"href":"http://home.com","icon":"fa fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-map-marker","text":"Opcion6"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-1-1"}]}]}]';
@@ -139,13 +139,22 @@
                         openerClass: 'btn btn-success btn-xs'
                     }
                 };
-                var editor = new MenuEditor('myList', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit'});
+                var editor = new MenuEditor('myEditor', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit'});
+                editor.setForm($('#frmEdit'));
+                editor.setUpdateButton($('#btnUpdate'));
+                
                 $('#btnReload').on('click', function () {
                     editor.setData(strjson);
                 });
                 $('#btnOut').on('click', function () {
                     var str = editor.getString();
                     $("#out").text(str);
+                });
+                $("#btnUpdate").click(function(){
+                    editor.update();
+                });
+                $('#btnAdd').click(function(){
+                    editor.add();
                 });
             });
         </script>

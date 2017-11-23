@@ -20,7 +20,6 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 ## Requirements
 * Bootstrap 3.x
 * jQuery
-* Bootstrap IconPicker 1.7
 * Fontawesome (or another iconset)
 
 ## How to use
