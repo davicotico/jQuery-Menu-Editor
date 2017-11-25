@@ -818,21 +818,14 @@ function MenuEditor(idSelector, options) {
     };
     $.extend(settings, options);
     var itemEdit = 0;
-    var sortableReady = false;
+    var sortableReady = true;
     var $form = null;
     var $updateButton = null;
-    
-    if ('data' in settings) {
-        var data = jsonToObject(settings.data);
-        if (data !== null) {
-            var menu = createMenu(data, 0);
-            $main.append(menu);
-        }
-    }
     var iconPickerOpt = settings.iconPicker;
-    
     var options = settings.listOptions;
     var iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
+    $main.sortableLists(settings.listOptions);
+    
     iconPicker.on('change', function (e) {
         let iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
         $form.find("[name=icon]").val(iconClass + e.icon);
