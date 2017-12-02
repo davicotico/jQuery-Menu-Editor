@@ -114,8 +114,7 @@ editor.setData(strjson);
 We have the function getString
 ```javascript
 var str = editor.getString();
-$("#yourTextarea").text(str);
+$("#myTextarea").text(str);
 ```
 
 ## En español: http://codeignitertutoriales.com/jquery-menu-editor-multinivel/
-*El tutorial en español corresponde a la primera versión. Proximamente actualizo el tutorial.
