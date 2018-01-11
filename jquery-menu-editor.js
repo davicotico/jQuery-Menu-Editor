@@ -204,8 +204,8 @@
             el.css({
                 'width': el.width(),
                 'position': 'absolute',
-                'top': elXY.top - elMT,
-                'left': elXY.left - elML
+                'top': elXY.top - $(window).scrollTop() - elMT,
+                'left': elXY.left - $(window).scrollLeft() - elML
             }).prependTo(base);
 
             placeholderNode.css({
@@ -292,7 +292,7 @@
                 isHintTarget = false;
             }
             offset = targetEl.offset();
-            cEl.el.animate({left: offset.left - state.cEl.mL, top: offset.top - state.cEl.mT}, 250,
+            cEl.el.animate({left: offset.left - $(window).scrollLeft() - state.cEl.mL, top: offset.top - $(window).scrollTop() - state.cEl.mT}, 250,
                     function ()  // complete callback
                     {
                         tidyCurrEl(cEl);
@@ -408,8 +408,9 @@
         function setCElPos(e, state){
             var cEl = state.cEl;
             cEl.el.css({
-                'top': e.pageY - cEl.xyOffsetDiff.Y - cEl.mT,
-                'left': e.pageX - cEl.xyOffsetDiff.X - cEl.mL
+                           'position': 'fixed',
+                           'top': e.clientY - cEl.xyOffsetDiff.Y - cEl.mT,
+                           'left': e.clientX - cEl.xyOffsetDiff.X - cEl.mL
             }); //Fix david (;)
 
         }
