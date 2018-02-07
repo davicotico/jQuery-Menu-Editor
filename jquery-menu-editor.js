@@ -614,8 +614,7 @@
          * @return No value
          */
         function showOnBottom(e, oEl){
-            if ($('#sortableListsHintWrapper', state.rootEl.el).length)
-            {
+            if ($('#sortableListsHintWrapper', state.rootEl.el).length) {
                 hint.unwrap();  // If hint is wrapped by ul/ol sortableListsHintWrapper
             }
 
@@ -721,14 +720,11 @@
 
             var opener = li.children('div').children('.sortableListsOpener').first();
 
-            if (setting.opener.as == 'html')
-            {
+            if (setting.opener.as == 'html'){
                 opener.html(setting.opener.close);
-            } else if (setting.opener.as == 'class')
-            {
+            } else if (setting.opener.as == 'class') {
                 opener.addClass(setting.opener.close).removeClass(setting.opener.open);
-            } else
-            {
+            } else {
                 opener.css('background-image', 'url(' + setting.opener.close + ')');
             }
         }
@@ -771,8 +767,7 @@
             // Remove every empty ul/ol from root and also with .sortableListsOpener
             // hintWrapper can not be removed before the hint
             $(setting.listSelector, state.rootEl.el).each(function (i){
-                if (!$(this).children().length)
-                {
+                if (!$(this).children().length){
                     $(this).prev('div').children('.sortableListsOpener').first().remove();
                     $(this).remove();
                 }
@@ -787,8 +782,7 @@
      * @desc Get the json from html list
      * @return {array} Array
      */
-    $.fn.sortableListsToJson = function ()
-    {
+    $.fn.sortableListsToJson = function (){
         var arr = [];
         $(this).children('li').each(function () {
             var li = $(this);
@@ -815,6 +809,7 @@ function MenuEditor(idSelector, options) {
     var settings = {
         labelEdit: '<i class="glyphicon glyphicon-edit clickable"></i>',
         labelRemove: '<i class="glyphicon glyphicon-remove clickable"></i>',
+        textConfirmDelete: 'This item will be deleted. Are you sure?',
         iconPicker: {}
     };
     $.extend(settings, options);
@@ -828,13 +823,13 @@ function MenuEditor(idSelector, options) {
     $main.sortableLists(settings.listOptions);
     
     iconPicker.on('change', function (e) {
-        let iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
+        var iconClass = (e.iconClass !== '') ? e.iconClass + ' ' : '';
         $form.find("[name=icon]").val(iconClass + e.icon);
     });
 
     $(document).on('click', '.btnRemove', function (e) {
         e.preventDefault();
-        if (confirm("Esta seguro que desea eliminar el item?")){
+        if (confirm(settings.textConfirmDelete)){
             var list = $(this).closest('ul');
             $(this).closest('li').remove();
             var isMainContainer = false;
@@ -894,18 +889,17 @@ function MenuEditor(idSelector, options) {
     });
     
     function editItem(item) {
-        let data = $(item).closest('li').data();
+        var data = $(item).closest('li').data();
         $.each(data, function (p, v) {
             $form.find("[name=" + p + "]").val(v);
         });
         $form.find(".item-menu").first().focus();
         if (data.hasOwnProperty('icon')) {
-            let icon = extractIcon(data.icon);
-            iconPicker.iconpicker('setIcon', icon);
+            iconPicker.iconpicker('setIcon', extractIcon(data.icon));
         }
         $updateButton.removeAttr('disabled');
         function extractIcon(icon) {
-            let a = icon.split(' ');
+            var a = icon.split(' ');
             if (a.length === 1)
                 return a[0];
             if (a.length === 2)
@@ -929,11 +923,11 @@ function MenuEditor(idSelector, options) {
         return itemEdit;
     };
     this.update = function(){
-        let $cEl = this.getCurrentItem();
+        var $cEl = this.getCurrentItem();
         if ($cEl===0){
             return;
         }
-        let oldIcon = $cEl.data('icon');
+        var oldIcon = $cEl.data('icon');
         $form.find('.item-menu').each(function(){
             $cEl.data($(this).attr('name'), $(this).val());
         });
@@ -943,15 +937,15 @@ function MenuEditor(idSelector, options) {
     };
    
     this.add = function(){
-        let data = {};
+        var data = {};
         $form.find('.item-menu').each(function(){
             data[$(this).attr('name')] = $(this).val();
         });
-        let btnGroup = TButtonGroup();
-        let textItem = $('<span>').addClass('txt').text(data.text);
-        let iconItem = $('<i>').addClass(data.icon);
-        let div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
-        let $li = $("<li>").data(data);
+        var btnGroup = TButtonGroup();
+        var textItem = $('<span>').addClass('txt').text(data.text);
+        var iconItem = $('<i>').addClass(data.icon);
+        var div = $('<div>').append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
+        var $li = $("<li>").data(data);
         $li.addClass('list-group-item').append(div);
         $main.append($li);
         resetForm();
@@ -979,12 +973,12 @@ function MenuEditor(idSelector, options) {
             $elem = $('<ul>');
         }
         $.each(arrayItem, function (k, v) {
-            let isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
+            var isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
             var $li = $('<li>');
             $li.attr('id', v.text);
             $li.addClass('list-group-item');
-            let itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
-            let v2 = $.extend({}, v);
+            var itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
+            var v2 = $.extend({}, v);
             if (isParent){ 
                 delete v2['children'];
             }
@@ -1003,7 +997,7 @@ function MenuEditor(idSelector, options) {
         });
         return $elem;
     }
-    function jsonToObject(str) {
+    function stringToArray(str) {
         try {
             var obj = JSON.parse(str);
         } catch (err) {
@@ -1014,7 +1008,7 @@ function MenuEditor(idSelector, options) {
     }
 
     this.setData = function (strJson) {
-        var arrayItem = jsonToObject(strJson);
+        var arrayItem = (Array.isArray(strJson)) ? strJson : stringToArray(strJson);
         if (arrayItem !== null) {
             $main.empty();
             var menu = createMenu(arrayItem);
@@ -1027,18 +1021,18 @@ function MenuEditor(idSelector, options) {
         }
     };
     this.getString = function () {
-        let obj = $main.sortableListsToJson();
+        var obj = $main.sortableListsToJson();
         return JSON.stringify(obj);
     };
     
     function TButtonGroup() {
-        let $divbtn = $('<div>').addClass('btn-group pull-right');
-        let $btnEdit = TButton({classCss: 'btn btn-primary btn-xs btnEdit', text: settings.labelEdit});
-        let $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: settings.labelRemove});
-        let $btnUp = TButton({classCss: 'btn btn-default btn-xs btnUp btnMove', text: '<i class="glyphicon glyphicon-chevron-up clickable"></i>'});
-        let $btnDown = TButton({classCss: 'btn btn-default btn-xs btnDown btnMove', text: '<i class="glyphicon glyphicon-chevron-down clickable"></i>'});
-        let $btnOut = TButton({classCss: 'btn btn-default btn-xs btnOut btnMove', text: '<i class="glyphicon glyphicon-save clickable"></i>'});
-        let $btnIn = TButton({classCss: 'btn btn-default btn-xs btnIn btnMove', text: '<i class="glyphicon glyphicon-export clickable"></i>'});
+        var $divbtn = $('<div>').addClass('btn-group pull-right');
+        var $btnEdit = TButton({classCss: 'btn btn-primary btn-xs btnEdit', text: settings.labelEdit});
+        var $btnRemv = TButton({classCss: 'btn btn-danger btn-xs btnRemove', text: settings.labelRemove});
+        var $btnUp = TButton({classCss: 'btn btn-default btn-xs btnUp btnMove', text: '<i class="glyphicon glyphicon-chevron-up clickable"></i>'});
+        var $btnDown = TButton({classCss: 'btn btn-default btn-xs btnDown btnMove', text: '<i class="glyphicon glyphicon-chevron-down clickable"></i>'});
+        var $btnOut = TButton({classCss: 'btn btn-default btn-xs btnOut btnMove', text: '<i class="glyphicon glyphicon-save clickable"></i>'});
+        var $btnIn = TButton({classCss: 'btn btn-default btn-xs btnIn btnMove', text: '<i class="glyphicon glyphicon-export clickable"></i>'});
         $divbtn.append($btnUp).append($btnDown).append($btnIn).append($btnOut).append($btnEdit).append($btnRemv);
         return $divbtn;
     }
