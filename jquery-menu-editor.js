@@ -123,7 +123,6 @@
 
             $(this).find('li').each(function (){
                 var li = $(this);
-
                 if (li.children(setting.listSelector).length){
                     opener.clone(true).prependTo(li.children('div').first());
                     if (!li.hasClass('sortableListsOpen')){
@@ -143,8 +142,7 @@
             // Solves selection/range highlighting
             e.preventDefault();
             // El must be li in jQuery object
-            var el = target.closest('li'),
-                    rEl = $(this);
+            var el = target.closest('li'), rEl = $(this);
             // Check if el is not empty
             if (el[ 0 ]){
                 setting.onDragStart(e, el);
@@ -276,8 +274,7 @@
             }
             offset = targetEl.offset();
             cEl.el.animate({left: offset.left - $(window).scrollLeft() - state.cEl.mL, top: offset.top - $(window).scrollTop() - state.cEl.mT}, 250,
-                    function ()  // complete callback
-                    {
+                    function (){  // complete callback
                         tidyCurrEl(cEl);
                         targetEl.after(cEl.el[ 0 ]);
                         targetEl[ 0 ].style.display = 'none';
@@ -291,7 +288,6 @@
                         if (hintWrapperNode.length){
                             hintWrapperNode.prev('div').append(opener.clone(true));
                         }
-
                         // Directly removed placeholder looks bad. It jumps up if the hint is below.
                         if (isHintTarget){
                             state.placeholderNode.slideUp(150, function (){
@@ -307,9 +303,7 @@
                             setting.complete(cEl.el);
                             state.isDragged = false;
                         }
-
                     });
-
             scrollStop(state);
             state.doc.unbind("mousemove", dragging).unbind("mouseup", endDrag);
         }
@@ -369,7 +363,6 @@
         /**
          * @desc Stops scrolling and sets variables
          * @param state
-         * @return No value
          */
         function scrollStop(state){
             clearInterval(state.upScroll);
@@ -383,7 +376,6 @@
          * @desc Sets the position of dragged element
          * @param e event object
          * @param state state object
-         * @return No value
          */
         function setCElPos(e, state){
             var cEl = state.cEl;
@@ -429,21 +421,16 @@
             // Returns jQuery object
             var el = $(document.elementFromPoint(x, y));
 
-            if (!state.rootEl.el.find(el).length) // el is outside the rootEl
-            {
+            if (!state.rootEl.el.find(el).length){ // el is outside the rootEl
                 return null;
-            } else if (el.is('#sortableListsPlaceholder') || el.is('#sortableListsHint')) // el is #placeholder/#hint
-            {
+            } else if (el.is('#sortableListsPlaceholder') || el.is('#sortableListsHint')){ // el is #placeholder/#hint
                 return null;
-            } else if (!el.is('li')) // el is ul or div or something else in li elem.
-            {
+            } else if (!el.is('li')){ // el is ul or div or something else in li elem.
                 el = el.closest('li');
                 return el[ 0 ] ? el : null;
-            } else if (el.is('li')) // el is most wanted li
-            {
+            } else if (el.is('li')){ // el is most wanted li
                 return el;
             }
-
         }
 
         //////// Show hint handlers //////////////////////////
@@ -451,7 +438,6 @@
          * @desc Shows or hides or does not show hint element
          * @param e event
          * @param state
-         * @return No value
          */
         function showHint(e, state){
             var oEl = state.oEl;
@@ -507,7 +493,6 @@
                     hint.css('display', 'none');
                     return;
                 }
-
                 // Find out if is necessary to wrap hint by hintWrapper
                 if (!list.length){
                     children.first().after(hint);
@@ -515,9 +500,8 @@
                 } else{
                     list.prepend(hint);
                 }
-
                 if (state.oEl){
-                    oEl.iconOpen(setting); // open(oEl); // TODO:animation??? .children('ul,ol').css('display', 'block');
+                    oEl.iconOpen(setting); // TODO:animation??? .children('ul,ol').css('display', 'block');
                 }
             }
             hint.css('display', 'block');
@@ -536,17 +520,14 @@
             if ($('#sortableListsHintWrapper', state.rootEl.el).length){
                 hint.unwrap();  // If hint is wrapped by ul/ol #sortableListsHintWrapper
             }
-
             // Hint inside the oEl
             if (!outside && e.pageX - oEl.offset().left > setting.insertZone){
                 var children = oEl.children(),
                         list = oEl.children(setting.listSelector).first();
-
                 if (list.children().first().is('#sortableListsPlaceholder')){
                     hint.css('display', 'none');
                     return;
                 }
-
                 // Find out if is necessary to wrap hint by hintWrapper
                 if (!list.length){
                     children.first().after(hint);
@@ -554,7 +535,6 @@
                 } else{
                     list.prepend(hint);
                 }
-
                 if (state.oEl){
                     oEl.iconOpen(setting); // open(oEl); // TODO:animation??? .children('ul,ol').css('display', 'block');
                 }
@@ -568,7 +548,6 @@
                 }
                 oEl.before(hint);
             }
-
             hint.css('display', 'block');
             // Ensures posible formating of elements. Second call is in the endDrag method.
             state.isAllowed = setting.isAllowed(state.cEl.el, hint, hint.parents('li').first());
@@ -578,7 +557,6 @@
          * @desc Called from showHint function. Displays or hides hint element.
          * @param e event
          * @param oEl oElement
-         * @return No value
          */
         function showOnBottom(e, oEl){
             if ($('#sortableListsHintWrapper', state.rootEl.el).length) {
@@ -603,7 +581,6 @@
                     hint.css('display', 'none');
                     return;
                 }
-
                 // Find out if is necessary to wrap hint by hintWrapper
                 if (list.length){
                     children.last().append(hint);
@@ -611,12 +588,10 @@
                     oEl.append(hint);
                     hint.wrap(hintWrapper);
                 }
-
                 if (state.oEl){
                     oEl.iconOpen(setting); // open(oEl); // TODO: animation???
                 }
             }
-
             hint.css('display', 'block');
             // Ensures posible formating of elements. Second call is in the endDrag method.
             state.isAllowed = setting.isAllowed(state.cEl.el, hint, hint.parents('li').first());
@@ -627,13 +602,11 @@
          * @param e event
          * @param oEl oElement
          * @param outside bool
-         * @return No value
          */
         function showOnBottomPlus(e, oEl, outside){
             if ($('#sortableListsHintWrapper', state.rootEl.el).length){
                 hint.unwrap();  // If hint is wrapped by ul/ol sortableListsHintWrapper
             }
-
             // Hint inside the oEl
             if (!outside && e.pageX - oEl.offset().left > setting.insertZone){
                 var children = oEl.children(),
@@ -643,7 +616,6 @@
                     hint.css('display', 'none');
                     return;
                 }
-
                 // Find out if is necessary to wrap hint by hintWrapper
                 if (list.length){
                     children.last().append(hint);
@@ -654,7 +626,6 @@
                 if (state.oEl){
                    oEl.iconOpen(setting); // open(oEl); // TODO: animation???
                 }
-
             }
             // Hint outside the oEl
             else{
@@ -665,11 +636,9 @@
                 }
                 oEl.after(hint);
             }
-
             hint.css('display', 'block');
             // Ensures posible formating of elements. Second call is in the endDrag method.
             state.isAllowed = setting.isAllowed(state.cEl.el, hint, hint.parents('li').first());
-
         }
         ////// End of show hint handlers ////
         /**
