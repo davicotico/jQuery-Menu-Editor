@@ -122,38 +122,37 @@
         </div>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src='jquery-menu-editor.js'></script>
+        <script src='jquery-menu-editor.js?v5'></script>
         <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
         <script src='bs-iconpicker/js/bootstrap-iconpicker.js'></script>
         <script>
             jQuery(document).ready(function () {
+                // menu items
                 var strjson = [{"href":"http://home.com","icon":"fa fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-map-marker","text":"Opcion6"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-1-1"}]}]}];
-                var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
-                var options = {
-                    hintCss: {'border': '1px dashed #13981D'},
-                    placeholderCss: {'background-color': 'gray'},
-                    opener: {
-                        as: 'html',
-                        close: '<i class="fa fa-minus"></i>',
-                        open: '<i class="fa fa-plus"></i>',
-                        openerCss: {'margin-right': '10px'},
-                        openerClass: 'btn btn-success btn-xs'
-                    }
+                //icon picker options
+                var iconPickerOptions = {searchText: 'Buscar...', labelHeader: '{0} de {1} Pags.'};
+                //sortable list options
+                var sortableListOptions = {
+                    placeholderCss: {'background-color': 'cyan'}
                 };
-                var editor = new MenuEditor('myEditor', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit'});
+
+                var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions, labelEdit: 'Edit'});
                 editor.setForm($('#frmEdit'));
                 editor.setUpdateButton($('#btnUpdate'));
                 
                 $('#btnReload').on('click', function () {
                     editor.setData(strjson);
                 });
+
                 $('#btnOut').on('click', function () {
                     var str = editor.getString();
                     $("#out").text(str);
                 });
+
                 $("#btnUpdate").click(function(){
                     editor.update();
                 });
+
                 $('#btnAdd').click(function(){
                     editor.add();
                 });
