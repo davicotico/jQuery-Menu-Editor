@@ -87,28 +87,20 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 
 ### Create and Setting the MenuEditor object
 ```javascript
-var iconPickerOpt = {cols: 5, searchText: "Buscar...", labelHeader: '{0} de {1} Pags.', footer: false};
-var options = {
-    hintCss: {'border': '1px dashed #13981D'},
-    placeholderCss: {'background-color': 'gray'},
-    ignoreClass: 'btn',
-    opener: {
-        active: true,
-        as: 'html',
-        close: '<i class="fa fa-minus"></i>',
-        open: '<i class="fa fa-plus"></i>',
-        openerCss: {'margin-right': '10px'},
-        openerClass: 'btn btn-success btn-xs'
-    }
+//icon picker options
+var iconPickerOptions = {searchText: 'Buscar...', labelHeader: '{0} de {1} Pags.'};
+//sortable list options
+var sortableListOptions = {
+    placeholderCss: {'background-color': 'cyan'}
 };
-var editor = new MenuEditor('myEditor', {listOptions: options, iconPicker: iconPickerOpt, labelEdit: 'Edit', labelRemove: 'Remove'});
+var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions, labelEdit: 'Edit'});
 ```
 
-### Load data from a Json string
+### Load data from a Json
 We have the method setData:
 ```javascript
-var strjson = '[{"href":"http://home.com","icon":"fa fa-home","text":"Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-2","children":[{"icon":"fa fa-map-marker","text":"Opcion6"}]}]}]}]';
-editor.setData(strjson);
+var arrayJson = [{"href":"http://home.com","icon":"fa fa-home","text":"Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-2","children":[{"icon":"fa fa-map-marker","text":"Opcion6"}]}]}]}];
+editor.setData(arrayJson);
 ```
 ### Output
 We have the function getString
