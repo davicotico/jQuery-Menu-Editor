@@ -1,6 +1,7 @@
 /**
- * A complete jQuery Menu Editor
- * @author David Ticona Saravia
+ * jQuery Menu Editor
+ * @author David Ticona Saravia https://github.com/davicotico
+ * @version 0.9.0
  * */
 (function ($){
     /**
@@ -854,7 +855,8 @@ function MenuEditor(idSelector, options) {
         }
         MenuEditor.updateButtons($main);
     });
-    /*PRIVATE METHODS*/
+
+    /* PRIVATE METHODS */
     function editItem($item) {
         var data = $item.data();
         $.each(data, function (p, v) {
@@ -874,6 +876,7 @@ function MenuEditor(idSelector, options) {
             return 'empty';
         }
     }
+
     function resetForm() {
         $form[0].reset();
         iconPicker = iconPicker.iconpicker(iconPickerOpt);
@@ -881,6 +884,7 @@ function MenuEditor(idSelector, options) {
         $updateButton.attr('disabled', true);
         itemEditing = null;
     }
+
     function stringToArray(str) {
         try {
             var obj = JSON.parse(str);
@@ -938,6 +942,7 @@ function MenuEditor(idSelector, options) {
         });
         return $elem;
     }
+
     function TOpener(li){
         var opener = $('<span>').addClass('sortableListsOpener ' + options.opener.openerClass).css(options.opener.openerCss)
                 .on('mousedown', function (e){
@@ -964,7 +969,7 @@ function MenuEditor(idSelector, options) {
             }
         });
     }
-    /*PUBLIC METHODS*/
+    /* PUBLIC METHODS */
     this.setForm = function(form){
         $form = form;
     };
@@ -1037,6 +1042,11 @@ function MenuEditor(idSelector, options) {
         }
     };
 };
+/* STATIC METHOD */
+/**
+ * Update the buttons on the list. Only the buttons 'Up', 'Down', 'In', 'Out'
+ * @param {jQuery} $mainList The unorder list 
+ **/
 MenuEditor.updateButtons = function($mainList){
     $mainList.find('.btnMove').show();
     $mainList.updateButtons();
