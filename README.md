@@ -19,21 +19,23 @@ This project was inspirated and based in jQuery-Sortable-lists http://camohub.gi
 
 ## Requirements
 * Bootstrap 3.x
-* jQuery
+* jQuery >= 1.10.2
 * Fontawesome (or another iconset)
 
 ## How to use
 ### Include the Css and scripts
 ```html
+<!-- the css in the <head> -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="bs-iconpicker/css/bootstrap-iconpicker.min.css">
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<!-- (Recommended) Just before the closing body tag </body> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src='jquery-menu-editor.min.js'></script> //is just 16KB !!!
 <script src='bs-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js'></script>
 <script src='bs-iconpicker/js/bootstrap-iconpicker.js'></script>
+<script src='jquery-menu-editor.min.js'></script> //is just 16KB !!!
 ```
 
 ### Creating the Drag & Drop list
