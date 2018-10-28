@@ -12,9 +12,9 @@
 This project was inspirated and based in jQuery-Sortable-lists http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
 
 ### The Form item editor
-![menu-multilevel](http://codeignitertutoriales.com/wp-content/uploads/2017/01/jquery-menu-editor-form.jpg)
+![menu-multilevel](http://codeignitertutoriales.com/wp-content/uploads/2018/10/jquery-menu-editor-form.jpg)
 ### The Multilevel Drag & Drop
-![multilevel-menu](http://codeignitertutoriales.com/wp-content/uploads/2017/01/jquery-menu-editor-dragdrop.jpg)
+![multilevel-menu](http://codeignitertutoriales.com/wp-content/uploads/2018/10/jquery-menu-editor-sortable.jpg)
 
 # Documentation
 
