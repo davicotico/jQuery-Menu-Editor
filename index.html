@@ -15,7 +15,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body style="margin-top: 50px;">
+    <body>
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,9 +29,9 @@
         <a class="btn btn-success my-2 my-sm-0" href="https://github.com/davicotico/jQuery-Menu-Editor" target="_blank"><i class="fab fa-github"></i> View on Github</a>
         </div>
         </nav>
-        <section class="jumbotron text-center">
+        <section class="jumbotron text-center" >
         <div class="container">
-          <h1 class="jumbotron-heading">jQuery Menu Editor 1.0.0</h1>
+          <h1 class="jumbotron-heading" style="padding-top: 50px;">jQuery Menu Editor 1.0.0</h1>
           <h4>by Davicotico</h4>
           <p class="lead text-muted">Lightweight and Powerful Menu Editor.</p>
           <p>
@@ -98,7 +98,6 @@
                                             <button type="button" id="myEditor_icon" class="btn btn-outline-secondary"></button>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="icon" class="item-menu">
                                 </div>
                                 <div class="form-group">
                                     <label for="href">URL</label>
@@ -116,6 +115,7 @@
                                     <label for="title">Tooltip</label>
                                     <input type="text" name="title" class="form-control item-menu" id="title" placeholder="Tooltip">
                                 </div>
+                                <input type="hidden" name="icon" class="item-menu">
                             </form>
                         </div>
                         <div class="card-footer">
@@ -158,9 +158,9 @@
         </div>
         <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="jquery-menu-editor.min.js"></script>
         <script type="text/javascript" src="bootstrap-iconpicker/js/iconset/fontawesome5-3-1.min.js"></script>
         <script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>
-        <script type="text/javascript" src="jquery-menu-editor.min.js"></script>
         <script>
             jQuery(document).ready(function () {
                 /* =============== DEMO =============== */
