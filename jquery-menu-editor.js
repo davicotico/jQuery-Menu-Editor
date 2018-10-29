@@ -1246,7 +1246,7 @@ function MenuEditor(idSelector, options) {
 
     function TOpener(li){
         var opener = $('<span>').addClass('sortableListsOpener ' + options.opener.openerClass).css(options.opener.openerCss)
-                .on('mousedown', function (e){
+                .on('mousedown touchstart', function (e){
                     var li = $(this).closest('li');
                     if (li.hasClass('sortableListsClosed')) {
                         li.iconOpen(options);
