@@ -1,4 +1,4 @@
-# jQuery Menu Editor 1.0.0
+# jQuery Menu Editor 1.0.1
 # >>> [DEMO](http://codeignitertutoriales.com/demos/jqmenueditor/)
 ### Features
 * Add, Update & Remove items from Menu
