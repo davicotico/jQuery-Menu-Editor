@@ -95,6 +95,8 @@ var editor = new MenuEditor('myEditor',
             { 
             listOptions: sortableListOptions, 
             iconPicker: iconPickerOptions,
+            maxLevel: 2 // (Optional) Default is -1 (no level limit)
+            // Valid levels are from [0, 1, 2, 3,...N]
             });
 editor.setForm($('#frmEdit'));
 editor.setUpdateButton($('#btnUpdate'));
