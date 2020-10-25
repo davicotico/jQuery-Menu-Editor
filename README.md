@@ -9,7 +9,7 @@
 * Load data from JSON string 
 * The output is a Json string
 
-This project was inspirated and based in jQuery-Sortable-lists http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
+This project is based on jQuery-Sortable-lists (v1.4.0) http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
 
 ### The Form item editor
 ![menu-multilevel](http://codeignitertutoriales.com/wp-content/uploads/2018/10/jquery-menu-editor-form.jpg)

@@ -31,7 +31,7 @@
         </nav>
         <section class="jumbotron text-center" >
         <div class="container">
-          <h1 class="jumbotron-heading" style="padding-top: 50px;">jQuery Menu Editor 1.0.0</h1>
+          <h1 class="jumbotron-heading" style="padding-top: 50px;">jQuery Menu Editor 1.1.0</h1>
           <h4>by Davicotico</h4>
           <p class="lead text-muted">Lightweight and Powerful Menu Editor.</p>
           <p>
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="href">URL</label>
-                                    <input type="text" class="form-control item-menu" id="href" name="href" placeholder="URL">
+                                    <input type="url" class="form-control item-menu" id="href" name="href" placeholder="URL">
                                 </div>
                                 <div class="form-group">
                                     <label for="target">Target</label>
@@ -127,8 +127,6 @@
                     <ul>
                         <li><a href="https://github.com/davicotico/jQuery-Menu-From-JSON" target="_blank">jQuery Menu from JSON</a></li>
                         <li><a href="https://github.com/davicotico/PHP-Quick-Menu" target="_blank">PHP Quick Menu</a></li>
-                        <li><a href="https://github.com/davicotico/Codeigniter-Form-Validation-Extension" target="_blank">Form Validator Extension for Codeigniter</a></li>
-                        <li><a href="https://github.com/davicotico/Codeigniter-Imagify" target="_blank">Codeigniter Imagify (Image optimization)</a></li>
                         <li><a href="https://github.com/davicotico/jQuery-formHelper" target="_blank">jQuery formHelper</a></li>
                     </ul>
                 </div>
@@ -136,6 +134,14 @@
             <div class="row mt-3">
                 <div class="col-md-12 ">
                     <h3>Changelog</h3>
+                    <h5>v1.1.0</h5>
+                    <ul>
+                        <li>Maximum Level(maxLevel) option</li>
+                    </ul>
+                    <h5>v1.0.1</h5>
+                    <ul>
+                        <li>Fix: Issue on mobile devices, Opener button on submenus</li>
+                    </ul>
                     <h5>v1.0.0</h5>
                     <ul>
                         <li>Update to Bootstrap 4.1.x</li>
@@ -153,7 +159,7 @@
             </div>
             <hr>
             <footer class="bg-light border" style="padding: 2rem;">
-                <p>&copy; 2018 David Ticona Saravia at <a href="https://twitter.com/infolibv" target="_blank"><i class="fab fa-twitter"></i> @infolibv</a></p>
+                <p>2020 David Ticona Saravia at <a href="https://twitter.com/davicodev" target="_blank"><i class="fab fa-twitter"></i> @davicodev</a></p>
             </footer>
         </div>
         <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -173,7 +179,7 @@
                     placeholderCss: {'background-color': "#cccccc"}
                 };
 
-                var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions});
+                var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions, maxLevel: 2});
                 editor.setForm($('#frmEdit'));
                 editor.setUpdateButton($('#btnUpdate'));
                 $('#btnReload').on('click', function () {
@@ -196,10 +202,10 @@
 
                 /** PAGE ELEMENTS **/
                 $('[data-toggle="tooltip"]').tooltip();
-                $.getJSON( "https://api.github.com/repos/davicotico/jQuery-Menu-Editor", function( data ) {
+                /*$.getJSON( "https://api.github.com/repos/davicotico/jQuery-Menu-Editor", function( data ) {
                     $('#btnStars').html(data.stargazers_count);
                     $('#btnForks').html(data.forks_count);
-                });
+                });*/
             });
         </script>
     </body>

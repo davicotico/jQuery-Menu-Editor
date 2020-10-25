@@ -1,10 +1,10 @@
 /**
  * jQuery Menu Editor
  * @author David Ticona Saravia https://github.com/davicotico
- * @version 1.0.0
+ * @version 1.1.0
  * */
-(function ($){
-    
+( function( $ )
+{    
     /**
      * @desc jQuery plugin to sort html list also the tree structures
      * @version 1.4.0
@@ -127,8 +127,7 @@
         }
         else
         {
-            opener.css( 'background-image', 'url(' + setting.opener.close + ')' );
-            console.error( 'jQuerySortableLists opener as background image is deprecated. In version 2.0.0 it will be removed. Use html instead please.' );
+            console.error('Invalid setting for opener.as');
         }
 
         // Container with all actual elements and parameters
@@ -418,9 +417,7 @@
 
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////// Helpers /////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //////// Scroll handlers /////////////////////////////////////////////////////////////////////////////
 
@@ -585,7 +582,6 @@
             }
 
         }
-
         //////// End of current element handlers //////////////////////////////////////////////////////
         //////// Show hint handlers //////////////////////////////////////////////////////
 
@@ -1016,6 +1012,22 @@
         });
         return arr;
     };
+
+    /**
+     * Update levels on <ul> data attribute 
+     */
+    $.fn.updateLevels = function(depth){
+        var level = (typeof depth === 'undefined') ? 0 : depth;
+        $(this).children('li').each(function () {
+            var li = $(this);
+            var ch = li.children('ul');
+            if (ch.length > 0) {
+                ch.data("level", level + 1);
+                ch.updateLevels(level + 1);
+            }
+        });
+    };
+
     /**
      * @description Update the buttons at the nested list (the main <ul>).
      * the buttons are: up, down, item in, item out
@@ -1051,18 +1063,19 @@
     };
 }(jQuery));
 /**
- * @version 1.0.0
+ * @version 1.1.0
  * @author David Ticona Saravia
  * @param {string} idSelector Attr ID
  * @param {object} options Options editor
  * */
 function MenuEditor(idSelector, options) {
-    var $main = $("#" + idSelector);
+    var $main = $("#" + idSelector).data("level", "0");
     var settings = {
         labelEdit: '<i class="fas fa-edit clickable"></i>',
         labelRemove: '<i class="fas fa-trash-alt clickable"></i>',
         textConfirmDelete: 'This item will be deleted. Are you sure?',
         iconPicker: { cols: 4, rows: 4, footer: false, iconset: "fontawesome5" },
+        maxLevel: -1,
         listOptions: { 
             hintCss: { border: '1px dashed #13981D'}, 
             opener: {
@@ -1078,7 +1091,11 @@ function MenuEditor(idSelector, options) {
             listsCss: {"padding-top": "10px"},
             complete: function (cEl) {
                 MenuEditor.updateButtons($main);
+                $main.updateLevels(0);
                 return true;
+            },
+            isAllowed: function(currEl, hint, target) {
+                return isValidLevel(currEl, target);
             }
         }
     };
@@ -1089,14 +1106,14 @@ function MenuEditor(idSelector, options) {
     var $updateButton = null;
     var iconPickerOpt = settings.iconPicker;
     var options = settings.listOptions;
-    //iconpicker plugin
     var iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
-    //sortable list plugin
     $main.sortableLists(settings.listOptions);
+
     /* EVENTS */
     iconPicker.on('change', function (e) {
         $form.find("[name=icon]").val(e.icon);
     });
+
     $(document).on('click', '.btnRemove', function (e) {
         e.preventDefault();
         if (confirm(settings.textConfirmDelete)){
@@ -1143,11 +1160,15 @@ function MenuEditor(idSelector, options) {
             list.remove();
         }
         MenuEditor.updateButtons($main);
+        $main.updateLevels();
     });
     $main.on('click', '.btnIn', function (e) {
         e.preventDefault();
         var $li = $(this).closest('li');
         var $prev = $li.prev('li');
+        if (! isValidLevel($li, $prev)) {
+            return false;
+        }
         if ($prev.length > 0) {
             var $ul = $prev.children('ul');
             if ($ul.length > 0)
@@ -1161,6 +1182,7 @@ function MenuEditor(idSelector, options) {
             }
         }
         MenuEditor.updateButtons($main);
+        $main.updateLevels();
     });
 
     /* PRIVATE METHODS */
@@ -1219,7 +1241,7 @@ function MenuEditor(idSelector, options) {
      **/
     function createMenu(arrayItem, depth) {
         var level = (typeof (depth) === 'undefined') ? 0 : depth;
-        var $elem = (level === 0) ? $main : $('<ul>').addClass('pl-0').css('padding-top', '10px');
+        var $elem = (level === 0) ? $main : $('<ul>').addClass('pl-0').css('padding-top', '10px').data("level", level);
         $.each(arrayItem, function (k, v) {
             var isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
             var itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
@@ -1262,6 +1284,7 @@ function MenuEditor(idSelector, options) {
             li.iconOpen(options);
         }
     }
+
     function setOpeners() {
         $main.find('li').each(function () {
             var $li = $(this);
@@ -1270,6 +1293,22 @@ function MenuEditor(idSelector, options) {
             }
         });
     }
+
+    function isValidLevel($li, $liTarget) {
+        if (settings.maxLevel < 0){
+            return true;
+        }
+        var targetLevel = 0;
+        var liCount = $li.find('ul').length;
+        if ($liTarget.length==0) {
+            targetLevel = 0;
+        } else {
+            targetLevel = parseInt($liTarget.parent().data("level")) + 1;
+        }
+        console.log((targetLevel + liCount));
+        return ((targetLevel + liCount)<=settings.maxLevel)
+    }
+
     /* PUBLIC METHODS */
     this.setForm = function(form){
         $form = form;
