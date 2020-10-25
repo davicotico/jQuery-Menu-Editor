@@ -1116,7 +1116,7 @@ function MenuEditor(idSelector, options) {
 
     $(document).on('click', '.btnRemove', function (e) {
         e.preventDefault();
-        if (confirm(settings.textConfirmDelete)){
+        if (confirm(settings.textConfirmDelete)) {
             var list = $(this).closest('ul');
             $(this).closest('li').remove();
             var isMainContainer = false;
@@ -1318,7 +1318,7 @@ function MenuEditor(idSelector, options) {
         return $form;
     };
 
-    this.setUpdateButton = function($btn){
+    this.setUpdateButton = function($btn) {
         $updateButton = $btn;
         $updateButton.attr('disabled', true);
         itemEditing = null;
@@ -1338,7 +1338,7 @@ function MenuEditor(idSelector, options) {
             return;
         }
         var oldIcon = $cEl.data('icon');
-        $form.find('.item-menu').each(function(){
+        $form.find('.item-menu').each(function() {
             $cEl.data($(this).attr('name'), $(this).val());
         });
         $cEl.children().children('i').removeClass(oldIcon).addClass($cEl.data('icon'));
@@ -1348,7 +1348,7 @@ function MenuEditor(idSelector, options) {
    
     this.add = function(){
         var data = {};
-        $form.find('.item-menu').each(function(){
+        $form.find('.item-menu').each(function() {
             data[$(this).attr('name')] = $(this).val();
         });
         var btnGroup = TButtonGroup();
@@ -1393,7 +1393,7 @@ function MenuEditor(idSelector, options) {
  * Update the buttons on the list. Only the buttons 'Up', 'Down', 'In', 'Out'
  * @param {jQuery} $mainList The unorder list 
  **/
-MenuEditor.updateButtons = function($mainList){
+MenuEditor.updateButtons = function($mainList) {
     $mainList.find('.btnMove').show();
     $mainList.updateButtons();
 };
