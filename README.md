@@ -1,4 +1,4 @@
-# jQuery Menu Editor 1.1.0
+# jQuery Menu Editor 1.2.0
 # >>> [DEMO](https://davicotico.github.io/jQuery-Menu-Editor/)
 ### Features
 * Add, Update & Remove items from Menu
