@@ -18,6 +18,7 @@ This project is based on jQuery-Sortable-lists (v1.4.0) http://camohub.github.io
 * jQuery >= 3.x
 * Fontawesome 5.3.1
 * Bootstrap Iconpicker 1.10.0
+* jQuery-Sortable-lists 1.4.0 (with mobile support)
 
 ## How to use
 ### Include the Css and scripts
@@ -32,6 +33,7 @@ This project is based on jQuery-Sortable-lists (v1.4.0) http://camohub.github.io
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="bootstrap-iconpicker/js/iconset/fontawesome5-3-1.min.js"></script>
 <script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>
+<script type="text/javascript" src="jquery-sortable-lists-mobile-1.4.0.js"></script>
 <script type="text/javascript" src="jquery-menu-editor.min.js"></script>
 ```
 
@@ -113,12 +115,12 @@ $('#btnAdd').click(function(){
 ### Load data from a Json
 We have the method setData:
 ```javascript
-var arrayjson = [{"href":"http://home.com","icon":"fas fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fas fa-chart-bar","text":"Opcion2"},{"icon":"fas fa-bell","text":"Opcion3"},{"icon":"fas fa-crop","text":"Opcion4"},{"icon":"fas fa-flask","text":"Opcion5"},{"icon":"fas fa-map-marker","text":"Opcion6"},{"icon":"fas fa-search","text":"Opcion7","children":[{"icon":"fas fa-plug","text":"Opcion7-1","children":[{"icon":"fas fa-filter","text":"Opcion7-1-1"}]}]}];
+var arrayJson = [{"href":"http://home.com","icon":"fas fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fas fa-chart-bar","text":"Opcion2"},{"icon":"fas fa-bell","text":"Opcion3"},{"icon":"fas fa-crop","text":"Opcion4"},{"icon":"fas fa-flask","text":"Opcion5"},{"icon":"fas fa-map-marker","text":"Opcion6"},{"icon":"fas fa-search","text":"Opcion7","children":[{"icon":"fas fa-plug","text":"Opcion7-1","children":[{"icon":"fas fa-filter","text":"Opcion7-1-1"}]}]}];
 editor.setData(arrayJson);
 ```
 ### Output
-We have the function getString
+We have the function getJsonString
 ```javascript
-var str = editor.getString();
+var str = editor.getJsonString();
 $("#myTextarea").text(str);
 ```
