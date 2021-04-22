@@ -169,6 +169,11 @@ function MenuEditor(idSelector, options) {
         }
       });
     });
+    var observerInitSettings = {
+      subtree: false,
+      attributes: false,
+      childList: true
+    };
 
     /* EVENTS */
     iconPicker.on('change', function (e) {
@@ -325,11 +330,7 @@ function MenuEditor(idSelector, options) {
             $elem.append($li);
 
             $div.each(function () {
-              openerWrapperObserver.observe(this, {
-                subtree: false,
-                attributes: false,
-                childList: true
-              });
+              openerWrapperObserver.observe(this, observerInitSettings);
             });
 
             // Setting element value propety, which is retrieved by
@@ -452,11 +453,14 @@ function MenuEditor(idSelector, options) {
         var btnGroup = TButtonGroup();
         var textItem = $('<span>').addClass('txt').text(data.text);
         var iconItem = $('<i>').addClass(data.icon);
-        var div = $('<div>').css({"overflow": "auto"}).append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
+        var $div = $('<div>').css({"overflow": "auto"}).append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
         var $li = $("<li>").data(data);
-        $li.addClass('list-group-item pr-0').append(div);
+        $li.addClass('list-group-item pr-0').append($div);
         $main.append($li);
         MenuEditor.updateButtons($main);
+        $div.each(function () {
+          openerWrapperObserver.observe(this, observerInitSettings);
+        });
         resetForm();
     };
     /**
