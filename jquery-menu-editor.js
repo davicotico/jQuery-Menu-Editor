@@ -40,18 +40,36 @@
      * @desc Get the json from html list
      * @return {array} Array
      */
-    $.fn.sortableListsToJson = function (){
+    $.fn.menuEditorToJson = function (){
         var arr = [];
         $(this).children('li').each(function () {
-            var li = $(this);
-            var object = li.data();
+            var $li = $(this);
+            // Preserve the original object on data
+            var object = $.extend(true, {}, $li.data());
             arr.push(object);
-            var ch = li.children('ul,ol').sortableListsToJson();
+            var ch = $li.children('ul,ol').menuEditorToJson();
             if (ch.length > 0) {
                 object.children = ch;
             } else {
                 delete object.children;
             }
+        });
+        return arr;
+    };
+
+    /**
+     * @desc Get an flattened array version of the data from the html list
+     *
+     * @return {array} Array
+     */
+    $.fn.menuEditorToArray = function (arr = [], parentId = undefined){
+        $(this).children('li').each(function () {
+            var $li = $(this);
+            // Preserve the original object on data
+            var object = $.extend(true, {parentId: parentId}, $li.data());
+            arr.push(object);
+            var ch = $li.children('ul,ol').menuEditorToArray(arr, object.id);
+            delete object.children;
         });
         return arr;
     };
@@ -309,6 +327,7 @@ function MenuEditor(idSelector, options) {
         var level = (typeof (depth) === 'undefined') ? 0 : depth;
         var $elem = (level === 0) ? $main : $('<ul>').addClass('pl-0').css('padding-top', '10px').data("level", level);
         $.each(arrayItem, function (k, v) {
+            var hasId = (typeof (v.id) !== "undefined");
             var isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
             var itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
             var temp = $.extend({}, v);
@@ -333,16 +352,10 @@ function MenuEditor(idSelector, options) {
               openerWrapperObserver.observe(this, observerInitSettings);
             });
 
-            // Setting element value propety, which is retrieved by
-            // sortableListsToHierarchy and sortableListsToArray
-            if (v.value !== undefined) {
-              $li.data('value', v.value);
-            }
-
             // Setting element id. This has to be done after appending
             // it (and its descendants) in order to check whether its
             // potencial id is already taken.
-            if (v.id) {
+            if (hasId) {
               var id;
               var baseId = $main.attr('id') + '_li_' + v.id;
               // $elem might not yet be appended to DOM
@@ -467,18 +480,19 @@ function MenuEditor(idSelector, options) {
      * Data Output
      * @return String JSON menu scheme
      */
+    this.getJson = function () {
+        return $main.menuEditorToJson();
+    };
     this.getJsonString = function () {
-        var obj = $main.sortableListsToJson();
+        var obj = $main.menuEditorToJson();
         return JSON.stringify(obj);
     };
-    this.getString = function () {
-        return $main.sortableListsToString();
-    };
     this.getArray = function () {
-        return $main.sortableListsToArray();
+        return $main.menuEditorToArray();
     };
-    this.getHierarchy = function () {
-        return $main.sortableListsToHierarchy();
+    this.getArrayString = function () {
+        var arr = $main.menuEditorToArray();
+        return JSON.stringify(arr);
     };
     /**
      * Data Input

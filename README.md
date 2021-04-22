@@ -119,8 +119,18 @@ var arrayJson = [{"href":"http://home.com","icon":"fas fa-home","text":"Home", "
 editor.setData(arrayJson);
 ```
 ### Output
-We have the function getJsonString
+Functions getJson and getJsonString. They return a Json representation of the data, respectivelly as an Json object and as a string
 ```javascript
-var str = editor.getJsonString();
-$("#myTextarea").text(str);
+var arrayJson = editor.getJson();
+console.log(arrayJson);
+var string = editor.arrayJsonString();
+console.log(string);
 ```
+Functions getArray and getArrayString. They return a flattened Json representation of the data, respectivelly as an Json object and as a string
+```javascript
+var array = editor.getArray();
+console.log(arrayJson);
+var string = editor.getArrayString();
+console.log(string);
+```
+Please note it might not be possible to reconstruct the tree from getArray or getArrayString unless every item originally had an id property
