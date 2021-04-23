@@ -4,7 +4,7 @@
  * @version 1.1.0
  * */
 ( function( $ )
-{    
+{
 
     /**
      * @desc Handles opening nested lists
@@ -130,11 +130,17 @@
  * @param {object} options Options editor
  * */
 function MenuEditor(idSelector, options) {
+    var $modal = null;
     var $main = $("#" + idSelector).data("level", "0");
     var settings = {
         labelEdit: '<i class="fas fa-edit clickable"></i>',
         labelRemove: '<i class="fas fa-trash-alt clickable"></i>',
         textConfirmDelete: 'This item will be deleted. Are you sure?',
+        useModalConfirmation: false,
+        modalTitleText: 'Confirm Deletion',
+        modalCloseLabel: 'Close',
+        modalCancelButtonText: 'Cancel',
+        modalDeleteButtonText: '<i class="fas fa-trash-alt clickable"></i>&nbsp;Delete',
         iconPicker: { cols: 4, rows: 4, footer: false, iconset: "fontawesome5" },
         maxLevel: -1,
         listOptions: { 
@@ -200,18 +206,8 @@ function MenuEditor(idSelector, options) {
 
     $(document).on('click', '#' + idSelector + ' .btnRemove', function (e) {
         e.preventDefault();
-        if (confirm(settings.textConfirmDelete)) {
-            var list = $(this).closest('ul');
-            $(this).closest('li').remove();
-            var isMainContainer = false;
-            if (typeof list.attr('id') !== 'undefined') {
-                isMainContainer = (list.attr('id').toString() === idSelector);
-            }
-            if ((!list.children().length) && (!isMainContainer)) {
-                list.prev('div').children('.sortableListsOpener').first().remove();
-                list.remove();
-            }
-            MenuEditor.updateButtons($main);
+        if (!settings.useModalConfirmation && confirm(settings.textConfirmDelete)) {
+            removeItem($(this));
         }
     });
 
@@ -270,6 +266,20 @@ function MenuEditor(idSelector, options) {
     });
 
     /* PRIVATE METHODS */
+    function removeItem($deleteButton) {
+        var $list = $deleteButton.closest('ul');
+        $deleteButton.closest('li').remove();
+        var isMainContainer = false;
+        if (typeof $list.attr('id') !== 'undefined') {
+            isMainContainer = ($list.attr('id').toString() === idSelector);
+        }
+        if ((!$list.children().length) && (!isMainContainer)) {
+            $list.prev('div').children('.sortableListsOpener').first().remove();
+            $list.remove();
+        }
+        MenuEditor.updateButtons($main);
+    }
+
     function editItem($item) {
         var data = $item.data();
         $.each(data, function (p, v) {
@@ -310,6 +320,10 @@ function MenuEditor(idSelector, options) {
         var $divbtn = $('<div>').addClass('btn-group float-right');
         var $btnEdit = TButton({classCss: 'btn btn-primary btn-sm btnEdit', text: settings.labelEdit});
         var $btnRemv = TButton({classCss: 'btn btn-danger btn-sm btnRemove', text: settings.labelRemove});
+        if (settings.useModalConfirmation) {
+          $btnRemv.attr("data-toggle", "modal");
+          $btnRemv.attr("data-target", "#"+$modal.attr('id'));
+        }
         var $btnUp = TButton({classCss: 'btn btn-secondary btn-sm btnUp btnMove', text: '<i class="fas fa-angle-up clickable"></i>'});
         var $btnDown = TButton({classCss: 'btn btn-secondary btn-sm btnDown btnMove', text: '<i class="fas fa-angle-down clickable"></i>'});
         var $btnOut = TButton({classCss: 'btn btn-secondary btn-sm btnOut btnMove', text: '<i class="fas fa-level-down-alt clickable"></i>'});
@@ -376,6 +390,54 @@ function MenuEditor(idSelector, options) {
 
         });
         return $elem;
+    }
+
+    function createModalDialog(){
+      var id = $main.attr('id') + '_modal';
+      var $modal = $(
+        "<div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\""+id+"_label\" aria-hidden=\"true\">" +
+          "<div class=\"modal-dialog\" role=\"document\">" +
+            "<div class=\"modal-content\">" +
+              "<div class=\"modal-header\">" +
+                "<h5 class=\"modal-title\" id=\""+id+"_label\">" +
+                  settings.modalTitleText +
+                "</h5>" +
+                "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\""+settings.modalCloseLabel+"\">" +
+                  "<span aria-hidden=\"true\">&times;</span>" +
+                "</button>" +
+              "</div>" +
+              "<div class=\"modal-body\">" +
+                settings.textConfirmDelete +
+              "</div>" +
+              "<div class=\"modal-footer\">" +
+                "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
+                  settings.modalCancelButtonText +
+                "</button>" +
+                "<button type=\"button\" class=\"btn btn-danger btn-delete\">" +
+                  settings.modalDeleteButtonText +
+                "</button>" +
+              "</div>" +
+            "</div>" +
+          "</div>" +
+        "</div>"
+      )
+      .attr('id', id)
+      .on('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var $deleteButton = $(event.relatedTarget);
+        $(this).find('.btn-delete')
+        // unbind previous click events
+        .off('click')
+        // Bind click event to remove current item
+        .on('click', function() {
+          // Remove the item
+          removeItem($deleteButton);
+          // and close the modal
+          $(this).closest('.modal').modal('hide');
+        });
+      });
+      $('body').append($modal);
+      return $modal;
     }
 
     function TOpener(li){
@@ -502,9 +564,12 @@ function MenuEditor(idSelector, options) {
         var arrayItem = (Array.isArray(strJson)) ? strJson : stringToArray(strJson);
         if (arrayItem !== null) {
             $main.empty();
-            var menu = createMenu(arrayItem);
+            if (settings.useModalConfirmation) {
+                $modal = createModalDialog();
+            }
+            var $menu = createMenu(arrayItem);
             if (!sortableReady) {
-                menu.sortableLists(settings.listOptions);
+                $menu.sortableLists(settings.listOptions);
                 sortableReady = true;
             } else {
                 setOpeners();
