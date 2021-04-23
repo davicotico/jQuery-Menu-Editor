@@ -62,7 +62,8 @@
      *
      * @return {array} Array
      */
-    $.fn.menuEditorToArray = function (arr = [], parentId = undefined){
+    $.fn.menuEditorToArray = function (arr, parentId){
+        arr = arr || [];
         $(this).children('li').each(function () {
             var $li = $(this);
             // Preserve the original object on data
