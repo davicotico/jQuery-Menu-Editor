@@ -205,14 +205,14 @@ function MenuEditor(idSelector, options) {
         $form.find("[name=icon]").val(e.icon);
     });
 
-    $(document).on('click', '#' + idSelector + ' .btnRemove', function (e) {
+    $main.on('click', '.btnRemove', function (e) {
         e.preventDefault();
         if (!settings.useModalConfirmation && confirm(settings.textConfirmDelete)) {
             removeItem($(this));
         }
     });
 
-    $(document).on('click', '#' + idSelector + ' .btnEdit', function (e) {
+    $main.on('click', '.btnEdit', function (e) {
         e.preventDefault();
         itemEditing = $(this).closest('li');
         editItem(itemEditing);
