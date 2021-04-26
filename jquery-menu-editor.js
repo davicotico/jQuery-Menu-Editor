@@ -136,12 +136,10 @@ function MenuEditor(idSelector, options) {
     var settings = {
         labelEdit: '<i class="fas fa-edit clickable"></i>',
         labelRemove: '<i class="fas fa-trash-alt clickable"></i>',
-        textConfirmDelete: 'This item will be deleted. Are you sure?',
+        labelCancelDeletion: 'Cancel',
+        labelConfirmDeletion: '<i class="fas fa-trash-alt clickable"></i>&nbsp;Yes, delete it',
+        textConfirmDeletion: 'This item will be deleted. Are you sure?',
         useModalConfirmation: false,
-        modalTitleText: 'Confirm Deletion',
-        modalCloseLabel: 'Close',
-        modalCancelButtonText: 'Cancel',
-        modalDeleteButtonText: '<i class="fas fa-trash-alt clickable"></i>&nbsp;Delete',
         iconPicker: { cols: 4, rows: 4, footer: false, iconset: "fontawesome5" },
         maxLevel: -1,
         listOptions: { 
@@ -207,7 +205,7 @@ function MenuEditor(idSelector, options) {
 
     $main.on('click', '.btnRemove', function (e) {
         e.preventDefault();
-        if (!settings.useModalConfirmation && confirm(settings.textConfirmDelete)) {
+        if (!settings.useModalConfirmation && confirm(settings.textConfirmDeletion)) {
             removeItem($(this));
         }
     });
@@ -322,8 +320,8 @@ function MenuEditor(idSelector, options) {
         var $btnEdit = TButton({classCss: 'btn btn-primary btn-sm btnEdit', text: settings.labelEdit});
         var $btnRemv = TButton({classCss: 'btn btn-danger btn-sm btnRemove', text: settings.labelRemove});
         if (settings.useModalConfirmation) {
-          $btnRemv.attr("data-toggle", "modal");
-          $btnRemv.attr("data-target", "#"+$modal.attr('id'));
+          // Add the attributes which allow the button to open the modal
+          $btnRemv.attr({"data-toggle": "modal", "data-target": "#"+$modal.attr('id')});
         }
         var $btnUp = TButton({classCss: 'btn btn-secondary btn-sm btnUp btnMove', text: '<i class="fas fa-angle-up clickable"></i>'});
         var $btnDown = TButton({classCss: 'btn btn-secondary btn-sm btnDown btnMove', text: '<i class="fas fa-angle-down clickable"></i>'});
@@ -399,23 +397,17 @@ function MenuEditor(idSelector, options) {
         "<div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\""+id+"_label\" aria-hidden=\"true\">" +
           "<div class=\"modal-dialog\" role=\"document\">" +
             "<div class=\"modal-content\">" +
-              "<div class=\"modal-header\">" +
+              "<div class=\"modal-header border-bottom-0\">" +
                 "<h5 class=\"modal-title\" id=\""+id+"_label\">" +
-                  settings.modalTitleText +
+                  settings.textConfirmDeletion +
                 "</h5>" +
-                "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\""+settings.modalCloseLabel+"\">" +
-                  "<span aria-hidden=\"true\">&times;</span>" +
-                "</button>" +
               "</div>" +
-              "<div class=\"modal-body\">" +
-                settings.textConfirmDelete +
-              "</div>" +
-              "<div class=\"modal-footer\">" +
+              "<div class=\"modal-footer border-top-0\">" +
                 "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
-                  settings.modalCancelButtonText +
+                  settings.labelCancelDeletion +
                 "</button>" +
-                "<button type=\"button\" class=\"btn btn-danger btn-delete\">" +
-                  settings.modalDeleteButtonText +
+                "<button type=\"button\" class=\"btn btn-danger btnConfirmRemoval\">" +
+                  settings.labelConfirmDeletion +
                 "</button>" +
               "</div>" +
             "</div>" +
@@ -424,18 +416,18 @@ function MenuEditor(idSelector, options) {
       )
       .attr('id', id)
       .on('show.bs.modal', function (event) {
-        // Button that triggered the modal
+        // $deleteButton is the button that triggered the modal
+        // Throgh it we can retrieve the li item to be deleted
         var $deleteButton = $(event.relatedTarget);
-        $(this).find('.btn-delete')
-        // unbind previous click events
-        .off('click')
-        // Bind click event to remove current item
-        .on('click', function() {
-          // Remove the item
-          removeItem($deleteButton);
-          // and close the modal
-          $(this).closest('.modal').modal('hide');
-        });
+        // Save the button to use it when the user clicks the confirmation button.
+        $(this).find('.btnConfirmRemoval').data('deleteButton', $deleteButton);
+      });
+      // Bind click event to actually remove current item
+      $modal.find('.btnConfirmRemoval').on('click', function() {
+        // Remove the item
+        removeItem($(this).data('deleteButton'));
+        // and close the modal
+        $(this).closest('.modal').modal('hide');
       });
       $('body').append($modal);
       return $modal;
