@@ -133,4 +133,4 @@ console.log(arrayJson);
 var string = editor.getArrayString();
 console.log(string);
 ```
-Please note it might not be possible to reconstruct the tree from getArray or getArrayString unless every item originally had an id property
+Please note it might not be possible to reconstruct the tree from getArray or getArrayString unless every item originally had an unique id property
