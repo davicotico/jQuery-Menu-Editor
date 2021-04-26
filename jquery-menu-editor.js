@@ -331,6 +331,23 @@ function MenuEditor(idSelector, options) {
         return $divbtn;
     }
 
+    function uniqueId(baseId, extraElements) {
+      var id;
+      var isUnique = !$('#'+baseId).length && !$(extraElements).find('#'+baseId).length;
+      if (isUnique) {
+        id = baseId;
+      } else {
+        if (baseIdCounters[baseId] === undefined) {
+          baseIdCounters[baseId] = 0;
+        }
+        do {
+          id = baseId + '_' + ++baseIdCounters[baseId];
+          isUnique = !$('#'+id).length && !$(extraElements).find('#'+id).length;
+        } while (!isUnique);
+      }
+      return id;
+    }
+
     /**
      * @param {array} arrayItem Object Array
      * @param {int} depth Depth sub-menu
@@ -369,21 +386,8 @@ function MenuEditor(idSelector, options) {
             // it (and its descendants) in order to check whether its
             // potencial id is already taken.
             if (hasId) {
-              var id;
-              var baseId = $main.attr('id') + '_li_' + v.id;
               // $elem might not yet be appended to DOM
-              var isUnique = !$('#'+baseId).length && !$elem.find('#'+baseId).length;
-              if (isUnique) {
-                id = baseId;
-              } else {
-                if (baseIdCounters[baseId] === undefined) {
-                  baseIdCounters[baseId] = 0;
-                }
-                do {
-                  id = baseId + '_' + ++baseIdCounters[baseId];
-                  isUnique = !$('#'+id).length && !$elem.find('#'+id).length;
-                } while (!isUnique);
-              }
+              var id = uniqueId($main.attr('id') + '_li_' + v.id, $elem);
               $li.attr('id', id);
             }
 
@@ -391,14 +395,18 @@ function MenuEditor(idSelector, options) {
         return $elem;
     }
 
+    /**
+     * @return {object} jQuery Object
+     **/
     function createModalDialog(){
-      var id = $main.attr('id') + '_modal';
+      var modalId = uniqueId($main.attr('id') + '_modal');
+      var titleId = uniqueId($main.attr('id') + '_modal_title');
       var $modal = $(
-        "<div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\""+id+"_label\" aria-hidden=\"true\">" +
+        "<div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">" +
           "<div class=\"modal-dialog\" role=\"document\">" +
             "<div class=\"modal-content\">" +
               "<div class=\"modal-header border-bottom-0\">" +
-                "<h5 class=\"modal-title\" id=\""+id+"_label\">" +
+                "<h5 class=\"modal-title\">" +
                   settings.textConfirmDeletion +
                 "</h5>" +
               "</div>" +
@@ -414,19 +422,23 @@ function MenuEditor(idSelector, options) {
           "</div>" +
         "</div>"
       )
-      .attr('id', id)
+      .attr('id', modalId)
+      .attr('aria-labelledby', titleId)
       .on('show.bs.modal', function (event) {
         // $deleteButton is the button that triggered the modal
         // Throgh it we can retrieve the li item to be deleted
         var $deleteButton = $(event.relatedTarget);
-        // Save the button to use it when the user clicks the confirmation button.
+        // Save $deleteButton for when the user clicks the confirmation button.
         $(this).find('.btnConfirmRemoval').data('deleteButton', $deleteButton);
       });
-      // Bind click event to actually remove current item
+
+      $modal.find('.modal-title').attr('id', titleId);
+
+      // Bind to the confirmation button the click event to actually remove current item
       $modal.find('.btnConfirmRemoval').on('click', function() {
-        // Remove the item
+        // Remove the current item ...
         removeItem($(this).data('deleteButton'));
-        // and close the modal
+        // ... and close the modal
         $(this).closest('.modal').modal('hide');
       });
       $('body').append($modal);
