@@ -155,7 +155,7 @@ function MenuEditor(idSelector, options) {
             ignoreClass: 'clickable',
             listsClass: "pl-0",
             listsCss: {"padding-top": "10px"},
-            complete: function (cEl) {
+            onChange: function(cEl) {
                 cEl.toggleClass('pr-0',         cEl.parent().get(0) != $main.get(0));
                 cEl.toggleClass('pr-2 pr-sm-3', cEl.parent().get(0) == $main.get(0));
                 MenuEditor.updateButtons($main);
