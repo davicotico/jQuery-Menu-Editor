@@ -156,6 +156,8 @@ function MenuEditor(idSelector, options) {
             listsClass: "pl-0",
             listsCss: {"padding-top": "10px"},
             complete: function (cEl) {
+                cEl.toggleClass('pr-0',         cEl.parent().get(0) != $main.get(0));
+                cEl.toggleClass('pr-2 pr-sm-3', cEl.parent().get(0) == $main.get(0));
                 MenuEditor.updateButtons($main);
                 $main.updateLevels(0);
                 return true;
@@ -233,11 +235,14 @@ function MenuEditor(idSelector, options) {
         var list = $(this).closest('ul');
         var $li = $(this).closest('li');
         var $liParent = $li.closest('ul').closest('li');
+        var $ul = $liParent.parent();
         $liParent.after($li);
         if (list.children().length <= 0) {
             list.prev('div').children('.sortableListsOpener').first().remove();
             list.remove();
         }
+        $li.toggleClass('pr-0',         $ul.get(0) != $main.get(0));
+        $li.toggleClass('pr-2 pr-sm-3', $ul.get(0) == $main.get(0));
         MenuEditor.updateButtons($main);
         $main.updateLevels();
     });
@@ -260,6 +265,8 @@ function MenuEditor(idSelector, options) {
                 TOpener($prev);
             }
         }
+        $li.toggleClass('pr-0',         $ul.get(0) != $main.get(0));
+        $li.toggleClass('pr-2 pr-sm-3', $ul.get(0) == $main.get(0));
         MenuEditor.updateButtons($main);
         $main.updateLevels();
     });
@@ -365,7 +372,11 @@ function MenuEditor(idSelector, options) {
                 delete temp['children'];
             }
             $.extend(itemObject, temp);
-            var $li = $('<li>').addClass('list-group-item pr-0');
+            var $li = $('<li>').addClass('list-group-item pl-2 pl-sm-3');
+            // Remove right padding from items not on top level,
+            // or else their buttons won't align with their parent's
+            $li.toggleClass('pr-0',         $elem.get(0) != $main.get(0));
+            $li.toggleClass('pr-2 pr-sm-3', $elem.get(0) == $main.get(0));
             $li.data(itemObject);
             var $div = $('<div>').css('overflow', 'auto');
             var $i = $('<i>').addClass(v.icon);
@@ -535,7 +546,7 @@ function MenuEditor(idSelector, options) {
         var iconItem = $('<i>').addClass(data.icon);
         var $div = $('<div>').css({"overflow": "auto"}).append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
         var $li = $("<li>").data(data);
-        $li.addClass('list-group-item pr-0').append($div);
+        $li.addClass('list-group-item pl-2 pl-sm-3 pr-2 pr-sm-3').append($div);
         $main.append($li);
         MenuEditor.updateButtons($main);
         $div.each(function () {
