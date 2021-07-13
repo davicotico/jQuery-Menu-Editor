@@ -580,7 +580,7 @@ function MenuEditor(idSelector, options) {
         var arrayItem = (Array.isArray(strJson)) ? strJson : stringToArray(strJson);
         if (arrayItem !== null) {
             $main.empty();
-            if (settings.useModalConfirmation) {
+            if ($modal ==null && settings.useModalConfirmation) {
                 $modal = createModalDialog();
             }
             var $menu = createMenu(arrayItem);
