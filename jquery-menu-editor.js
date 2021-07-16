@@ -173,13 +173,17 @@ function MenuEditor(idSelector, options) {
     var sortableReady = true;
     var $form = null;
     var $updateButton = null;
+    var $iconPicker = null
     var iconPickerOpt = settings.iconPicker;
     var options = settings.listOptions;
-    var iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
     $main.sortableLists(settings.listOptions);
 
     if (settings.useModalConfirmation) {
         $modal = createModalDialog();
+    }
+
+    if (jQuery.fn.iconpicker) {
+      $iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
     }
 
     // A mutation observer, used to make a tweak in the position of the nested
@@ -205,9 +209,11 @@ function MenuEditor(idSelector, options) {
     };
 
     /* EVENTS */
-    iconPicker.on('change', function (e) {
-        $form.find("[name=icon]").val(e.icon);
-    });
+    if ($iconPicker) {
+        $iconPicker.on('change', function (e) {
+            $form.find("[name=icon]").val(e.icon);
+        });
+    }
 
     $main.on('click', '.btnRemove', function (e) {
         e.preventDefault();
@@ -296,18 +302,20 @@ function MenuEditor(idSelector, options) {
             $form.find("[name=" + p + "]").val(v);
         });
         $form.find(".item-menu").first().focus();
-        if (data.hasOwnProperty('icon')) {
-            iconPicker.iconpicker('setIcon', data.icon);
-        } else{
-            iconPicker.iconpicker('setIcon', 'empty');
+        if ($iconPicker) {
+            $iconPicker.iconpicker('setIcon',
+                data.hasOwnProperty('icon') ? data.icon : ''
+            );
         }
         $updateButton.removeAttr('disabled');
     }
 
     function resetForm() {
         $form[0].reset();
-        iconPicker = iconPicker.iconpicker(iconPickerOpt);
-        iconPicker.iconpicker('setIcon', 'empty');
+        if ($iconPicker) {
+            $iconPicker = $iconPicker.iconpicker(iconPickerOpt);
+            $iconPicker.iconpicker('setIcon', '');
+        }
         $updateButton.attr('disabled', true);
         itemEditing = null;
     }
@@ -370,7 +378,10 @@ function MenuEditor(idSelector, options) {
         $.each(arrayItem, function (k, v) {
             var hasId = (typeof (v.id) !== "undefined");
             var isParent = (typeof (v.children) !== "undefined") && ($.isArray(v.children));
-            var itemObject = {text: "", href: "", icon: "empty", target: "_self", title: ""};
+
+            // Some properties are mandatory because they are used on the $li
+            // element assembly, and should also the stored in it's data
+            var itemObject = {text: "", icon: ""};
             var temp = $.extend({}, v);
             if (isParent){ 
                 delete temp['children'];
