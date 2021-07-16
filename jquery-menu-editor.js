@@ -178,6 +178,10 @@ function MenuEditor(idSelector, options) {
     var iconPicker = $('#'+idSelector+'_icon').iconpicker(iconPickerOpt);
     $main.sortableLists(settings.listOptions);
 
+    if (settings.useModalConfirmation) {
+        $modal = createModalDialog();
+    }
+
     // A mutation observer, used to make a tweak in the position of the nested
     // list opener button, which is generated and appended by the sortablelists
     // plugin. Should it ever change this DOM structure, this code will also
@@ -326,7 +330,7 @@ function MenuEditor(idSelector, options) {
         var $divbtn = $('<div>').addClass('btn-group float-right');
         var $btnEdit = TButton({classCss: 'btn btn-primary btn-sm btnEdit', text: settings.labelEdit});
         var $btnRemv = TButton({classCss: 'btn btn-danger btn-sm btnRemove', text: settings.labelRemove});
-        if (settings.useModalConfirmation) {
+        if ($modal && settings.useModalConfirmation) {
           // Add the attributes which allow the button to open the modal
           $btnRemv.attr({"data-toggle": "modal", "data-target": "#"+$modal.attr('id')});
         }
@@ -580,9 +584,6 @@ function MenuEditor(idSelector, options) {
         var arrayItem = (Array.isArray(strJson)) ? strJson : stringToArray(strJson);
         if (arrayItem !== null) {
             $main.empty();
-            if ($modal ==null && settings.useModalConfirmation) {
-                $modal = createModalDialog();
-            }
             var $menu = createMenu(arrayItem);
             if (!sortableReady) {
                 $menu.sortableLists(settings.listOptions);
