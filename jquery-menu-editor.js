@@ -551,22 +551,51 @@ function MenuEditor(idSelector, options) {
         resetForm();
     };
    
-    this.add = function(){
+    this.add = function($parentItem, index){
         var data = {};
         $form.find('.item-menu').each(function() {
             data[$(this).attr('name')] = $(this).val();
         });
-        var btnGroup = TButtonGroup();
-        var textItem = $('<span>').addClass('txt').text(data.text);
-        var iconItem = $('<i>').addClass(data.icon);
-        var $div = $('<div>').css({"overflow": "auto"}).append(iconItem).append("&nbsp;").append(textItem).append(btnGroup);
-        var $li = $("<li>").data(data);
-        $li.addClass('list-group-item pl-2 pl-sm-3 pr-2 pr-sm-3').append($div);
-        $main.append($li);
-        MenuEditor.updateButtons($main);
+
+        var $ul = $main;
+        // Make sure $parentItem is a descendant of $main
+        if ($ul.has($parentItem).length) {
+            $ul = $parentItem.children('ul');
+            if (!$ul.length) {
+                var parentLevel = $parentItem.parent('ul').data('level');
+                $ul = $('<ul>').addClass('pl-0').css('padding-top', '10px').data('level', parentLevel + 1);
+                $parentItem.addClass('sortableListsOpen').append($ul);
+                TOpener($parentItem);
+            } else {
+                $parentItem.iconOpen(options);
+            }
+        }
+
+        var $li = $("<li>").addClass('list-group-item pl-2 pl-sm-3');
+        // Remove right padding from items not on top level,
+        // or else their buttons won't align with their parent's
+        $li.toggleClass('pr-0',         $ul.get(0) != $main.get(0));
+        $li.toggleClass('pr-2 pr-sm-3', $ul.get(0) == $main.get(0));
+        $li.data(data);
+        var $div = $('<div>').css({"overflow": "auto"});
+        var $i = $('<i>').addClass(data.icon);
+        var $span = $('<span>').addClass('txt').text(data.text);
+        var $divbtn = TButtonGroup();
+        $div.append($i).append("&nbsp;").append($span).append($divbtn);
+        $li.append($div);
+
+        // Insert item at proper position
+        if (index == undefined) {
+          $ul.append($li);
+        } else {
+          $ul.children('li').eq(index).before($li);
+        }
+
         $div.each(function () {
-          openerWrapperObserver.observe(this, observerInitSettings);
+            openerWrapperObserver.observe(this, observerInitSettings);
         });
+
+        MenuEditor.updateButtons($main);
         resetForm();
     };
     /**
