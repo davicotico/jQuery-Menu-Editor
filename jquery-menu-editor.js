@@ -174,7 +174,7 @@ function MenuEditor(idSelector, options) {
     var sortableReady = true;
     var $form = null;
     var $updateButton = null;
-    var $iconPicker = null
+    var $iconPicker = null;
     var iconPickerOpt = settings.iconPicker;
     var options = settings.listOptions;
     $main.sortableLists(settings.listOptions);
