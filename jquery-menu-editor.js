@@ -140,6 +140,7 @@ function MenuEditor(idSelector, options) {
         labelConfirmDeletion: '<i class="fas fa-trash-alt clickable"></i>&nbsp;Yes, delete it',
         textConfirmDeletion: 'This item will be deleted. Are you sure?',
         useModalConfirmation: false,
+        showIcons: true,
         iconPicker: { cols: 4, rows: 4, footer: false, iconset: "fontawesome5" },
         maxLevel: -1,
         listOptions: { 
@@ -381,7 +382,10 @@ function MenuEditor(idSelector, options) {
 
             // Some properties are mandatory because they are used on the $li
             // element assembly, and should also the stored in it's data
-            var itemObject = {text: "", icon: ""};
+            var itemObject = {text: ""};
+            if (settings.showIcons) {
+                itemObject.icon = "";
+            }
             var temp = $.extend({}, v);
             if (isParent){ 
                 delete temp['children'];
@@ -394,10 +398,13 @@ function MenuEditor(idSelector, options) {
             $li.toggleClass('pr-2 pr-sm-3', $elem.get(0) == $main.get(0));
             $li.data(itemObject);
             var $div = $('<div>').css('overflow', 'auto');
-            var $i = $('<i>').addClass(v.icon);
+            if (settings.showIcons) {
+                var $i = $('<i>').addClass(v.icon);
+                $div.append($i).append("&nbsp;");
+            }
             var $span = $('<span>').addClass('txt').append(v.text).css('margin-right', '5px');
             var $divbtn =  TButtonGroup();
-            $div.append($i).append("&nbsp;").append($span).append($divbtn);
+            $div.append($span).append($divbtn);
             $li.append($div);
             if (isParent) {
                 $li.append(createMenu(v.children, level + 1));
@@ -546,7 +553,9 @@ function MenuEditor(idSelector, options) {
         $form.find('.item-menu').each(function() {
             $cEl.data($(this).attr('name'), $(this).val());
         });
-        $cEl.children().children('i').removeClass(oldIcon).addClass($cEl.data('icon'));
+        if (settings.showIcons) {
+            $cEl.children().children('i').removeClass(oldIcon).addClass($cEl.data('icon'));
+        }
         $cEl.find('span.txt').first().text($cEl.data('text'));
         resetForm();
     };
@@ -578,10 +587,13 @@ function MenuEditor(idSelector, options) {
         $li.toggleClass('pr-2 pr-sm-3', $ul.get(0) == $main.get(0));
         $li.data(data);
         var $div = $('<div>').css({"overflow": "auto"});
-        var $i = $('<i>').addClass(data.icon);
+        if (settings.showIcons) {
+            var $i = $('<i>').addClass(data.icon);
+            $div.append($i).append("&nbsp;")
+        }
         var $span = $('<span>').addClass('txt').text(data.text);
         var $divbtn = TButtonGroup();
-        $div.append($i).append("&nbsp;").append($span).append($divbtn);
+        $div.append($span).append($divbtn);
         $li.append($div);
 
         // Insert item at proper position
