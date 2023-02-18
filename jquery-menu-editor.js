@@ -1,7 +1,7 @@
 /**
  * jQuery Menu Editor
  * @author David Ticona Saravia https://github.com/davicotico
- * @version 1.1.0
+ * @version 1.1.1
  * */
 ( function( $ )
 {    

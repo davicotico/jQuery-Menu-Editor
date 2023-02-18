@@ -1,13 +1,13 @@
-# jQuery Menu Editor 1.1.0
-# >>> [DEMO](https://davicotico.github.io/jQuery-Menu-Editor/)
+# jQuery Menu Editor 1.1.1
+# >>> [DEMO](https://davidticona.com/demos/jQuery-Menu-Editor/)
 ### Features
 * Add, Update & Remove items from Menu
 * Multilevel Drag & Drop
 * Form Item Editor
-* Include IconPicker Plugin (https://victor-valencia.github.com/bootstrap-iconpicker)
-* Support to mobile devices
+* Include IconPicker Plugin (https://victor-valencia.github.io/bootstrap-iconpicker)
+* Support for mobile devices
 * Load data from JSON string 
-* The output is a Json string
+* The output is a JSON string
 
 This project is based on jQuery-Sortable-lists (v1.4.0) http://camohub.github.io/jquery-sortable-lists/index.html and added many features.
 
@@ -22,14 +22,14 @@ This project is based on jQuery-Sortable-lists (v1.4.0) http://camohub.github.io
 ## How to use
 ### Include the Css and scripts
 ```html
-<!-- the css in the <head> -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+<!-- the css inside the <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
 <link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.min.css">
 
 <!-- (Recommended) Just before the closing body tag </body> -->
 <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 <script type="text/javascript" src="bootstrap-iconpicker/js/iconset/fontawesome5-3-1.min.js"></script>
 <script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>
 <script type="text/javascript" src="jquery-menu-editor.min.js"></script>
