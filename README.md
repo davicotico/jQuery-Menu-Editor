@@ -1,6 +1,8 @@
 # jQuery Menu Editor 1.1.1
 # >>> [DEMO](https://davidticona.com/demos/jQuery-Menu-Editor/)
+### >> [NEW Project on progress: Vanilla Javascript Menu Editor](https://davidticona.com/demos/javascript-menu-editor/)
 ### >> [Tutorial en Español](https://davidticona.com/jquery-menu-editor-tutorial/)
+
 
 ### Features
 * Add, Update & Remove items from Menu
